@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web demo — EpivaScan</title>
+  <meta name="description" content="Add a photo of a skin concern and see which conditions it most resembles. A screening aid in development, not a diagnosis.">
+  <meta name="theme-color" content="#F6F2EA">
+  <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/scan.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <site-header></site-header>
+
+  <main id="main">
+
+    <section class="page-hero" style="padding-bottom:clamp(28px,4vw,44px); border-bottom:0">
+      <div class="wrap">
+        <p class="eyebrow">Web demo</p>
+        <h1 style="font-size:clamp(2.2rem,1.5rem + 3vw,3.6rem)">Scan a photo.</h1>
+        <div class="callout" id="model-notice" style="margin-top:26px; max-width:46rem">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4.500M12 17.200v.300"/></svg>
+          <p><strong data-role="notice-title">Interface preview.</strong> <span data-role="notice-text">The AI model isn&rsquo;t connected yet, so this page can&rsquo;t analyse photos. You can still walk through the flow.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="scan" data-scan>
+
+          <!-- Step 1: choose a photo -->
+          <div class="panel" data-stage="pick">
+            <div class="panel__head">
+              <p class="panel__step">Step 1 &middot; Photo</p>
+            </div>
+
+            <label class="dropzone when-pick">
+              <input class="visually-hidden" id="scan-file" type="file" accept="image/*">
+              <span>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M12 8.500v7M8.500 12h7"/></svg>
+                <span class="dropzone__title" style="display:block">Add a photo of the skin area</span>
+                <span class="dropzone__hint" style="display:block">Choose one from your photos or files</span>
+                <span class="dropzone__hint only-fine" style="margin-top:2px">You can also drop or paste an image here</span>
+              </span>
+            </label>
+
+            <div class="when-preview">
+              <div class="preview">
+                <img alt="Your selected photo">
+                <span class="preview__line" aria-hidden="true"></span>
+              </div>
+              <div class="preview__meta">
+                <span class="preview__name"></span>
+                <button class="link-btn" type="button" data-action="remove">Remove</button>
+              </div>
+            </div>
+
+            <div class="scan__actions">
+              <label class="btn btn--ghost when-pick only-touch">
+                <input class="visually-hidden" id="scan-camera" type="file" accept="image/*" capture="environment">
+                Take a photo
+              </label>
+              <button class="btn when-preview" type="button" data-action="analyse">Analyse photo <span class="arr" aria-hidden="true">&rarr;</span></button>
+            </div>
+
+            <p class="scan__privacy">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5.500c0 4.400-3 7.600-7 9.500-4-1.900-7-5.100-7-9.500V6z"/></svg>
+              <span id="privacy-note">In this demo your photo stays in your browser. Nothing is uploaded.</span>
+            </p>
+          </div>
+
+          <!-- Step 2: results -->
+          <div class="panel results" data-state="empty" aria-live="polite">
+            <div class="panel__head">
+              <p class="panel__step">Step 2 &middot; Results</p>
+              <span class="chip chip--outline" data-role="status">Waiting for photo</span>
+            </div>
+
+            <div class="state state--empty">
+              <ul class="ghost-bars" aria-hidden="true">
+                <li style="--w:58%"></li><li style="--w:36%"></li><li style="--w:44%"></li><li style="--w:28%"></li>
+              </ul>
+              <p class="state__text">Likely conditions will be listed here, each with a percentage, once a photo has been analysed.</p>
+            </div>
+
+            <div class="state state--analysing">
+              <ul class="ghost-bars" aria-hidden="true">
+                <li style="--w:58%"></li><li style="--w:36%"></li><li style="--w:44%"></li><li style="--w:28%"></li>
+              </ul>
+              <p class="state__text">Analysing your photo&hellip;</p>
+            </div>
+
+            <div class="state state--offline">
+              <h3 data-role="offline-title">The model isn&rsquo;t connected yet.</h3>
+              <p data-role="offline-text">The interface is ready, but the EpivaScan AI hasn&rsquo;t been plugged in. Your photo was not analysed and nothing left your device.</p>
+              <div class="results__actions">
+                <button class="btn btn--sm" type="button" data-action="analyse" data-role="retry" hidden>Try again</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-action="sample">Preview the results layout</button>
+              </div>
+            </div>
+
+            <div class="state state--result">
+              <div class="callout callout--sm" data-role="sample-flag">
+                <p><strong>Sample data.</strong> This is not an analysis of your photo.</p>
+              </div>
+
+              <div class="verdict">
+                <p class="verdict__kicker">Closest match</p>
+                <div class="verdict__main">
+                  <h3 class="verdict__name" data-role="top-name"></h3>
+                  <p class="verdict__pct" data-role="top-pct"></p>
+                </div>
+                <p class="verdict__read"><span class="chip" data-role="read-chip"></span><span data-role="read-text"></span></p>
+              </div>
+
+              <ul class="bars bars--lg" data-role="bars"></ul>
+              <button class="link-btn bars-toggle" type="button" data-action="toggle-all" aria-expanded="false"></button>
+
+              <div class="next">
+                <p class="next__h">Next step</p>
+                <p>Show this result to a health worker or doctor. They can examine the skin, ask the right questions and confirm what is going on.</p>
+                <p class="next__urgent">If the area is painful, bleeding, spreading or changing quickly, seek care now.</p>
+              </div>
+
+              <div class="results__actions">
+                <button class="btn btn--ghost btn--sm" type="button" data-action="remove">Scan another photo</button>
+                <a class="text-link" href="how-it-works.html#results">How to read this</a>
+              </div>
+
+              <p class="state__note">Percentages show how closely the photo matches each condition the model knows. They are not a diagnosis.</p>
+            </div>
+
+            <div class="state state--error">
+              <h3>That didn&rsquo;t work.</h3>
+              <p data-role="error">Something went wrong. Please try again.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <ul class="tips" style="margin-top:24px">
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.500V5M12 19v2.500M2.500 12H5M19 12h2.500M5.300 5.300l1.800 1.800M16.900 16.900l1.800 1.800M5.300 18.700l1.800-1.800M16.900 7.100l1.800-1.800"/></svg><span><strong>Good light</strong>Daylight, no harsh flash.</span></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2.500"/><circle cx="12" cy="12" r="3.500"/></svg><span><strong>Fill the frame</strong>About a hand&rsquo;s width away.</span></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg><span><strong>Keep it sharp</strong>Retake if it&rsquo;s blurred.</span></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.600 7-11a7 7 0 1 0-14 0c0 5.400 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></svg><span><strong>One area</strong>Nothing covering the skin.</span></li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <site-footer></site-footer>
+</body>
+</html>

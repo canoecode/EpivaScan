@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The model — EpivaScan</title>
+  <meta name="description" content="The AI model behind EpivaScan: how it will work, what will be published about it, and its current status.">
+  <meta name="theme-color" content="#F6F2EA">
+  <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <site-header></site-header>
+
+  <main id="main">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow reveal">The model</p>
+        <h1 class="reveal" style="--d:.05s">The AI behind <em>the scan.</em></h1>
+        <p class="lead reveal" style="--d:.12s">EpivaScan runs on an image-classification model that looks at a photo of skin and scores it against a set of conditions. This page is where its details will live.</p>
+        <div class="page-hero__status reveal" style="--d:.18s">
+          <span class="chip chip--clay chip--dot">Model in development</span>
+          <span class="chip chip--outline">Model card pending</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <p class="eyebrow">Planned pipeline</p>
+          <h2>What happens to a photo.</h2>
+        </div>
+        <ol class="pipeline reveal" style="--d:.08s">
+          <li>
+            <span class="pipeline__n">01</span>
+            <h3>Photo</h3>
+            <p>An image of the skin area, taken in the app or uploaded.</p>
+          </li>
+          <li>
+            <span class="pipeline__n">02</span>
+            <h3>Prepare</h3>
+            <p>The image is resized and normalised into the format the model expects.</p>
+          </li>
+          <li>
+            <span class="pipeline__n">03</span>
+            <h3>Classify</h3>
+            <p>The model scores the image against each condition it was trained on.</p>
+          </li>
+          <li>
+            <span class="pipeline__n">04</span>
+            <h3>Report</h3>
+            <p>Scores are shown as percentages, highest first.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="wrap split split--top">
+        <div class="reveal">
+          <p class="eyebrow">Model card</p>
+          <h2 style="margin-top:16px">The facts, <em>once they exist.</em></h2>
+          <p class="lead" style="margin-top:18px">Everything below is filled in when the model is published. Nothing here is a claim yet.</p>
+          <div class="hero__actions">
+            <a class="btn btn--ghost" data-link="huggingFaceUrl">View on Hugging Face</a>
+          </div>
+          <div class="browser" style="margin-top:36px">
+            <div class="browser__bar"><i></i><i></i><i></i><span class="browser__url">huggingface.co &middot; model</span></div>
+            <figure class="slot" data-slot="assets/img/model/model-card" data-label="Hugging Face model card"></figure>
+          </div>
+        </div>
+        <dl class="spec reveal" style="--d:.1s">
+          <div><dt>Hosting</dt><dd>Hugging Face <span class="tbd">&middot; link pending</span></dd></div>
+          <div><dt>Task</dt><dd>Image classification</dd></div>
+          <div><dt>Architecture</dt><dd class="tbd">To be published</dd></div>
+          <div><dt>Training data</dt><dd class="tbd">To be published</dd></div>
+          <div><dt>Conditions covered</dt><dd class="tbd">To be published</dd></div>
+          <div><dt>Validation results</dt><dd class="tbd">To be published</dd></div>
+          <div><dt>Results by skin tone</dt><dd class="tbd">To be published</dd></div>
+          <div><dt>Version</dt><dd class="tbd">Unreleased</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <p class="eyebrow">Conditions covered</p>
+          <h2>What it will recognise.</h2>
+          <p class="lead">The list of conditions is being finalised alongside the model. Each one will be listed here with a plain-language description.</p>
+        </div>
+        <div class="chip-row reveal" style="--d:.08s" aria-label="Condition list placeholder">
+          <span class="chip chip--outline">Condition 01</span>
+          <span class="chip chip--outline">Condition 02</span>
+          <span class="chip chip--outline">Condition 03</span>
+          <span class="chip chip--outline">Condition 04</span>
+          <span class="chip chip--outline">Condition 05</span>
+          <span class="chip chip--outline">Condition 06</span>
+          <span class="chip chip--outline">&hellip;</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="wrap split split--top">
+        <div class="reveal">
+          <p class="eyebrow">Transparency</p>
+          <h2 style="margin-top:16px">What we plan <em>to publish.</em></h2>
+          <p class="lead" style="margin-top:18px">A tool that looks at people&rsquo;s skin should show its working. These are the things this page is set up to report.</p>
+          <p style="margin-top:28px; display:flex; align-items:center; gap:14px; color:var(--ink-2); font-size:.95rem">
+            <span class="tones" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            Results across the full range of skin tones.
+          </p>
+        </div>
+        <ul class="checklist reveal" style="--d:.1s">
+          <li><div><strong>Accuracy for each condition</strong><span class="desc">How often the top match is right, condition by condition.</span></div><span class="chip chip--outline">Pending</span></li>
+          <li><div><strong>Performance by skin tone</strong><span class="desc">Whether results hold up on lighter and darker skin alike.</span></div><span class="chip chip--outline">Pending</span></li>
+          <li><div><strong>Where the data came from</strong><span class="desc">The image sources used for training and testing.</span></div><span class="chip chip--outline">Pending</span></li>
+          <li><div><strong>Known limitations</strong><span class="desc">Conditions, body areas and photo types the model handles poorly.</span></div><span class="chip chip--outline">Pending</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="cta reveal">
+          <div>
+            <h2>See where the model <em>plugs in.</em></h2>
+            <p>The web demo already has the capture and results screens. It lights up when the model is connected.</p>
+          </div>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="scan.html">Open the demo <span class="arr" aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <site-footer></site-footer>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# The Space's Python and environment, built by ml/setup_space_env.ps1.
+# ml/.gitignore covers the training environment and training runs.
+ml/.uv/
+ml/.venv-space/
+
+# Written by Gradio wherever app.py is started from.
+.gradio/

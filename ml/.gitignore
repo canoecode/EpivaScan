@@ -1,0 +1,6 @@
+# Environment, training runs and anything derived from the photos stay out of version
+# control and out of the published website.
+.venv/
+runs/
+__pycache__/
+*.pyc

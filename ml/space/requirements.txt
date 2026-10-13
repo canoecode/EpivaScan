@@ -1,0 +1,10 @@
+# What the Space installs on top of Gradio (whose version is sdk_version in README.md).
+# Only needed once EPIVASCAN_MODEL points at a trained model; mock mode uses none of it.
+# transformers matches ml/requirements.txt so the Space reads the model the way training wrote it.
+# That pin is also why sdk_version stops at Gradio 6.17.3: later Gradio needs huggingface-hub 1.x,
+# which transformers 4.57 does not accept. Raise the two together.
+# The extra index gives the CPU build of torch, which is all a free Space can use.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.8.0
+transformers==4.57.6
+pillow>=10
