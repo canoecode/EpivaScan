@@ -1,8 +1,8 @@
 /* EpivaScan — web demo flow (scan.html).
    Photos are analysed by the EpivaScan Space (ml/space/app.py), reached with @gradio/client.
    CONFIG.modelSpace in site.js says which Space. With none set, a copy of the site opened
-   on this machine looks for the Space running beside it; anywhere else nothing is uploaded
-   and the page says so. */
+   on this machine looks for the Space running beside it; anywhere else the page answers
+   with built-in sample values, labelled as such, and nothing is uploaded. */
 (function () {
   'use strict';
 
@@ -16,6 +16,16 @@
   /* Pinned, so a new release of the client can't change this page unannounced. */
   const CLIENT_URL = 'https://cdn.jsdelivr.net/npm/@gradio/client@2.7.1/dist/index.min.js';
   const LOCAL_PORT = 7860;
+
+  /* What the page answers with when no Space is configured. The same made-up numbers as
+     MOCK_SCORES in ml/space/app.py; keep the two in step. */
+  const BUILTIN = [
+    ['Eczema (dermatitis)', 0.52], ['Contact dermatitis', 0.17], ['Psoriasis', 0.09],
+    ['Tinea (ringworm)', 0.06], ['Other / unclear', 0.05], ['Hives (urticaria)', 0.03],
+    ['Insect bite', 0.02], ['Folliculitis', 0.02], ['Drug rash', 0.01], ['Pityriasis rosea', 0.01],
+    ['Acne', 0.01], ['Impetigo', 0.005], ['Shingles (herpes zoster)', 0.003],
+    ['Cold sore (herpes simplex)', 0.002]
+  ].map(([label, score]) => ({ label, score }));
 
   /* Stand-in values used only by "Preview the results layout". */
   const SAMPLE = [
@@ -36,12 +46,11 @@
 
   /* What the page says about the model, by how it is connected. */
   const MODES = {
-    none: {
+    builtin: {
       tone: 'clay',
-      title: 'Interface preview.',
-      text: 'The AI model isn’t connected yet, so this page can’t analyse photos. You can still walk through the flow.',
-      privacy: 'In this demo your photo stays in your browser. Nothing is uploaded.',
-      offline: ['The model isn’t connected yet.', 'The interface is ready, but the EpivaScan AI hasn’t been plugged in. Your photo was not analysed and nothing left your device.']
+      title: 'Test mode.',
+      text: 'The AI model is still being trained, so this page answers every photo with the same sample values. They are not an analysis of your photo.',
+      privacy: 'In this demo your photo stays in your browser. Nothing is uploaded.'
     },
     connecting: {
       tone: 'teal',
@@ -137,10 +146,11 @@
   }
 
   /* Send the photo to the Space. Resolves to its answer,
-     { mock, model, predictions: [{ label, score }, …] }, or to null when there is no Space
-     or it can't be reached, in which case nothing has been uploaded. */
+     { mock, model, predictions: [{ label, score }, …] }, or to null when the Space can't be
+     reached, in which case nothing has been uploaded. With no Space configured it answers
+     with the built-in sample values and the photo never leaves the browser. */
   async function analyse(image) {
-    if (!SPACE) return null;
+    if (!SPACE) return { mock: true, model: 'built-in', predictions: BUILTIN };
     let client;
     try {
       client = await connect();
@@ -262,7 +272,7 @@
       } else if (!isAnswer(output)) {
         throw new Error('The model sent back a result this page can’t read.');
       } else {
-        setMode(output.mock ? 'mock' : 'live');
+        setMode(!output.mock ? 'live' : output.model === 'built-in' ? 'builtin' : 'mock');
         render(output.predictions, Boolean(output.mock));
       }
       reveal(results);
@@ -305,7 +315,7 @@
 
   /* Ask the Space which mode it is in before anyone uploads a photo. This also wakes a
      Space that has gone to sleep. */
-  setMode(SPACE ? 'connecting' : 'none');
+  setMode(SPACE ? 'connecting' : 'builtin');
   if (SPACE) {
     connect()
       .then((client) => client.predict('/info'))

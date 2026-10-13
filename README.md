@@ -25,7 +25,9 @@ Which Space the page talks to:
 | --- | --- | --- |
 | Anywhere | Set, for example `user/epivascan` | Photos go to that Space on Hugging Face |
 | This machine (`localhost`) or a phone on the same Wi-Fi | Empty | Photos go to the Space running on this machine, port 7860 |
-| A public address | Empty | Nothing is uploaded. The page says the model isn't connected |
+| A public address | Empty | The page answers with built-in sample values, labelled "Test mode". Nothing is uploaded and no server is needed |
+
+Creating a Gradio Space on Hugging Face needs a paid plan (PRO, $9 a month, checked October 2026), so the published site uses the built-in sample values until a model server is hosted somewhere. Setting `modelSpace` switches the page to that server with no other change.
 
 Until a trained model is plugged in, the Space runs in **mock mode**: it answers every photo with the same made-up numbers and flags its answer as a mock. The page then shows a "Test mode" notice before any upload and labels the result "Sample data". Both disappear by themselves once the Space has a real model. See `ml/space/README.md`.
 
