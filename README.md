@@ -41,6 +41,16 @@ python -m http.server 5173                                        # the site, in
 
 To try it on a phone, connect the phone to the same Wi-Fi, set `$env:GRADIO_SERVER_NAME = "0.0.0.0"` before starting the Space, and open `http://THIS-PC-ADDRESS:5173/scan.html` on the phone (`ipconfig` shows the address). Windows may ask whether to let Python through the firewall.
 
+## Logo files
+
+All in `assets/img/`. The wordmark is drawn as outlines (Fraunces), so it looks the same without the font installed.
+
+| File | Use |
+| --- | --- |
+| `logo.svg`, `logo.png` | Mark with "EpivaScan" beside it, for light backgrounds (PNG is 1600 px wide, transparent) |
+| `logo-on-dark.svg`, `logo-on-dark.png` | The same on dark backgrounds, in the footer's colours |
+| `logo-mark.svg` | The mark alone, used as the browser-tab icon |
+
 ## Adding photos
 
 Every dashed placeholder box shows the file it is waiting for. Save an image at that path and the box fills itself; no HTML edits needed. `.jpg`, `.jpeg`, `.png` and `.webp` all work.
