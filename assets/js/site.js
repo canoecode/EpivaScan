@@ -6,7 +6,7 @@
   /* Fill these in as the real things come online. Empty values render as "Soon". */
   const CONFIG = window.EPIVASCAN = {
     huggingFaceUrl: '',  // public model card on Hugging Face
-    modelSpace: '',      // Hugging Face Space that runs the model, as 'user/epivascan' (see ml/space)
+    modelSpace: 'CanoeBoat/epivascan',  // Hugging Face Space that runs the model (see ml/space)
     phoneAppUrl: '',     // store / download link for the phone app
     contactEmail: ''
   };
