@@ -989,7 +989,8 @@ site-footer { display: block; }
 .state .next__urgent { margin-top: 10px; font-weight: 600; color: var(--clay-deep); }
 
 .results__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 20px; }
-.results__actions .text-link { font-size: .95rem; }
+.results__actions .btn { min-height: 44px; }
+.results__actions .text-link { padding-block: 11px; font-size: .95rem; }
 
 .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
 .tips li { display: flex; gap: 12px; padding: 18px 20px; box-shadow: 0 0 0 .5px var(--line); font-size: .95rem; color: var(--ink-2); }
