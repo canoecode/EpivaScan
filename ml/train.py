@@ -809,6 +809,8 @@ def parse_args():
     p.add_argument("--ungradable", choices=["skip", "other", "separate"], default="skip",
                    help="what to do with cases the dermatologists could not grade")
     p.add_argument("--max-cases", type=int, help="use only the first N cases (for quick tests)")
+    p.add_argument("--from-checkpoint",
+                   help="skip training: calibrate, test and export this saved checkpoint folder")
     p.add_argument("--workers", type=int, default=min(6, os.cpu_count() or 1))
     p.add_argument("--seed", type=int, default=17)
     p.add_argument("--report-to", default="none", help="e.g. trackio")
@@ -861,7 +863,13 @@ def main():
     # Reloaded from disk the way the image-classification pipeline loads it.
     processor = AutoImageProcessor.from_pretrained(final, use_fast=False)
     args.image_size = int(processor.crop_size["height"])
-    model = build_model(args.model, classes, args.drop_path)
+    if args.from_checkpoint:
+        model = AutoModelForImageClassification.from_pretrained(args.from_checkpoint)
+        saved = [model.config.id2label[i] for i in range(model.config.num_labels)]
+        if saved != classes:
+            raise SystemExit(f"The checkpoint was trained on different classes: {saved}")
+    else:
+        model = build_model(args.model, classes, args.drop_path)
 
     views = {c: raw.select_columns([c]) for c in image_columns}
     index = {name: np.flatnonzero(table["split"] == name) for name in ("train", "val", "test")}
@@ -896,7 +904,9 @@ def main():
             metric_for_best_model="balanced_accuracy",
             greater_is_better=True,
             dataloader_num_workers=args.workers,
-            dataloader_persistent_workers=args.workers > 0,
+            # Not persistent: on Windows every kept-alive worker holds several GB of
+            # committed memory, and train, validation and test loaders each keep their own.
+            dataloader_persistent_workers=False,
             label_names=["labels", "primary"],
             report_to=args.report_to,
             seed=args.seed,
@@ -911,7 +921,12 @@ def main():
         head_lr=args.head_lr,
         layer_decay=args.layer_decay,
     )
-    trainer.train()
+    if args.from_checkpoint:
+        state = Path(args.from_checkpoint) / "trainer_state.json"
+        history = json.loads(state.read_text(encoding="utf-8"))["log_history"] if state.exists() else []
+    else:
+        trainer.train()
+        history = trainer.state.log_history
 
     # Calibrate on validation, fold the temperature into the head, then touch the test set once.
     val_logits = trainer.predict(data["val"]).predictions
@@ -932,7 +947,7 @@ def main():
     model.config.problem_type = "single_label_classification"  # tells the pipeline to use softmax
     model.save_pretrained(final)
     (final / "eval" / "metrics.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    (final / "eval" / "training_log.json").write_text(json.dumps(trainer.state.log_history, indent=2), encoding="utf-8")
+    (final / "eval" / "training_log.json").write_text(json.dumps(history, indent=2), encoding="utf-8")
     save_plots(report, classes, final / "eval")
     (final / "README.md").write_text(
         model_card(args, classes, table, uncovered, report, val, temperature, adults_only), encoding="utf-8")
@@ -952,7 +967,8 @@ def main():
     print("Example output:", json.dumps(sample[:3]))
     if torch.cuda.is_available():
         print(f"Peak GPU memory: {torch.cuda.max_memory_allocated() / 2**30:.1f} GB")
-    shutil.rmtree(Path(args.output_dir) / "checkpoints", ignore_errors=True)  # the final model is in model/
+    if not args.from_checkpoint:
+        shutil.rmtree(Path(args.output_dir) / "checkpoints", ignore_errors=True)  # the final model is in model/
     print("Model, model card and charts saved to", final.resolve())
 
     if args.push_to_hub:
