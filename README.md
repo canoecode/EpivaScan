@@ -49,7 +49,8 @@ All in `assets/img/`. The wordmark is drawn as outlines (Fraunces), so it looks 
 | --- | --- |
 | `logo.svg`, `logo.png` | Mark with "EpivaScan" beside it, for light backgrounds (PNG is 1600 px wide, transparent) |
 | `logo-on-dark.svg`, `logo-on-dark.png` | The same on dark backgrounds, in the footer's colours |
-| `logo-mark.svg` | The mark alone, used as the browser-tab icon |
+| `logo-v2.svg`, `logo-v2.png`, `logo-v2-on-dark.svg`, `logo-v2-on-dark.png` | The chosen logo: a ring of six skin tones around a clay dot, upright wordmark. Not yet used on the site, which still shows the first mark |
+| `logo-mark.svg` | The first mark alone, still the browser-tab icon |
 
 ## Adding photos
 
