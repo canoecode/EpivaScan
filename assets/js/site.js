@@ -39,7 +39,7 @@
   }
 
   const brand = (svg) =>
-    `<a class="brand" href="index.html" aria-label="EpivaScan home">${svg}<span class="brand__name">Epiva<em>Scan</em></span></a>`;
+    `<a class="brand" href="index.html" aria-label="EpivaScan home">${svg}<span class="brand__name">EpivaScan</span></a>`;
 
   class SiteHeader extends HTMLElement {
     connectedCallback() {
@@ -48,7 +48,7 @@
 
       this.innerHTML = `
         <header class="wrap site-header__inner">
-          ${brand(mark('#0A3F3A', '#F6F2EA', '#E8895E', 'rgba(246,242,234,.5)'))}
+          ${brand(mark('#0A1722', '#FFFFFF', '#CB9069', 'rgba(255,255,255,.5)'))}
           <nav class="site-nav" id="site-nav" aria-label="Main">
             ${links}
             <a class="site-nav__cta" href="scan.html">Try the demo</a>
@@ -80,7 +80,7 @@
           <div class="wrap">
             <div class="site-footer__grid">
               <div>
-                ${brand(mark('#F6F2EA', '#0A3F3A', '#C25E38', 'rgba(10,63,58,.4)'))}
+                ${brand(mark('#FFFFFF', '#0A1722', '#A56C47', 'rgba(10,23,34,.4)'))}
                 <p class="site-footer__blurb">A first look at a skin concern, from a single photo. Currently in development.</p>
               </div>
               <nav aria-label="Footer">
