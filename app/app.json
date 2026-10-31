@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "EpivaScan",
+    "slug": "epivascan",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.epivascan.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#EEF2F5",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.epivascan.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single",
+      "bundler": "metro",
+      "name": "EpivaScan",
+      "themeColor": "#EEF2F5",
+      "backgroundColor": "#EEF2F5"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "EpivaScan opens your photos so you can choose a picture of the skin area to check.",
+          "cameraPermission": "EpivaScan uses the camera to photograph the skin area you want to check.",
+          "microphonePermission": false
+        }
+      ]
+    ],
+    "scheme": "epivascan",
+    "backgroundColor": "#EEF2F5",
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

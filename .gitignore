@@ -5,3 +5,7 @@ ml/.venv-space/
 
 # Written by Gradio wherever app.py is started from.
 .gradio/
+.tools/
+
+# Impeccable's engine binary; `npx impeccable install` downloads it again.
+.claude/skills/impeccable/scripts/bin/

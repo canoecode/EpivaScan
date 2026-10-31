@@ -4,14 +4,28 @@
     {
       "name": "epivascan-site",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5173"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5173"
+      ],
       "port": 5173
     },
     {
       "name": "epivascan-space",
       "runtimeExecutable": "ml/.venv-space/Scripts/python.exe",
-      "runtimeArgs": ["ml/space/app.py"],
+      "runtimeArgs": [
+        "ml/space/app.py"
+      ],
       "port": 7860
+    },
+    {
+      "name": "epivascan-app-web",
+      "runtimeExecutable": ".tools/node22/node-v22.23.4-win-x64/node.exe",
+      "runtimeArgs": [
+        "app/scripts/dev-web.js"
+      ],
+      "port": 8081
     }
   ]
 }
