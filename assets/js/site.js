@@ -15,6 +15,7 @@
     ['index.html', 'Home'],
     ['how-it-works.html', 'How it works'],
     ['model.html', 'The model'],
+    ['validation.html', 'Validation'],
     ['impact.html', 'Impact'],
     ['about.html', 'About']
   ];
@@ -133,6 +134,7 @@
     const img = new Image();
     img.alt = el.dataset.alt || label;
     img.decoding = 'async';
+    if (el.dataset.focus) img.style.objectPosition = el.dataset.focus;  // e.g. data-focus="50% 70%" to keep a subject in the crop
     img.onload = () => {
       el.removeAttribute('role');
       el.removeAttribute('aria-label');
@@ -171,6 +173,67 @@
     }
   }
 
+  /* Photo viewer: <a href="full.jpg" data-gallery="name"><img alt="…"></a>. Links sharing a name
+     page through together in file-name order; without JS each link still opens the full photo. */
+  const ARROW = (d) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+  let viewer;
+
+  function openViewer(links, start) {
+    if (!viewer) {
+      viewer = document.createElement('dialog');
+      viewer.className = 'lightbox';
+      viewer.setAttribute('aria-label', 'Photo viewer');
+      viewer.innerHTML = `
+        <div class="lightbox__bar"><span class="lightbox__count"></span><button type="button" data-go="close">Close</button></div>
+        <div class="lightbox__stage">
+          <button type="button" data-go="-1" aria-label="Previous photo">${ARROW('M15 5l-7 7 7 7')}</button>
+          <img alt="">
+          <button type="button" data-go="1" aria-label="Next photo">${ARROW('M9 5l7 7-7 7')}</button>
+        </div>
+        <p class="lightbox__caption"></p>
+        <div class="lightbox__nav">
+          <button type="button" data-go="-1" aria-label="Previous photo">${ARROW('M15 5l-7 7 7 7')}</button>
+          <button type="button" data-go="1" aria-label="Next photo">${ARROW('M9 5l7 7-7 7')}</button>
+        </div>`;
+      document.body.append(viewer);
+      viewer.addEventListener('click', (e) => {
+        const go = e.target.closest('[data-go]')?.dataset.go;
+        if (go === 'close' || e.target === viewer) viewer.close();
+        else if (go) viewer.step(Number(go));
+      });
+      viewer.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') viewer.step(-1);
+        if (e.key === 'ArrowRight') viewer.step(1);
+      });
+      viewer.addEventListener('close', () => viewer.opener?.focus());
+    }
+
+    let i = start;
+    const img = viewer.querySelector('img');
+    const show = () => {
+      const alt = links[i].querySelector('img')?.alt || '';
+      img.src = links[i].href;
+      img.alt = alt;
+      viewer.querySelector('.lightbox__caption').textContent = alt;
+      viewer.querySelector('.lightbox__count').textContent = `${i + 1} / ${links.length}`;
+    };
+    viewer.step = (d) => { i = (i + d + links.length) % links.length; show(); };
+    viewer.opener = links[start];
+    show();
+    viewer.showModal();
+  }
+
+  function initGalleries() {
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[data-gallery]');
+      if (!link || e.metaKey || e.ctrlKey || e.shiftKey || typeof HTMLDialogElement !== 'function') return;
+      e.preventDefault();
+      const links = [...document.querySelectorAll(`a[data-gallery="${link.dataset.gallery}"]`)]
+        .sort((a, b) => a.href.localeCompare(b.href));
+      openViewer(links, links.indexOf(link));
+    });
+  }
+
   function initReveals() {
     const items = document.querySelectorAll('.reveal');
     if (!('IntersectionObserver' in window)) {
@@ -194,6 +257,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-slot]').forEach(initSlot);
     document.querySelectorAll('[data-link]').forEach(initLink);
+    initGalleries();
     initReveals();
   });
 })();
