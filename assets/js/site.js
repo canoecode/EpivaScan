@@ -14,7 +14,6 @@
   const NAV = [
     ['index.html', 'Home'],
     ['how-it-works.html', 'How it works'],
-    ['model.html', 'The model'],
     ['validation.html', 'Validation'],
     ['impact.html', 'Impact'],
     ['about.html', 'About']
@@ -75,33 +74,24 @@
 
   class SiteFooter extends HTMLElement {
     connectedCallback() {
-      const links = NAV.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
+      const links = NAV.slice(1).map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
       this.innerHTML = `
         <footer class="site-footer">
           <div class="wrap">
-            <div class="site-footer__grid">
-              <div>
-                ${brand(mark('#FFFFFF', '#0A1722', '#A56C47', 'rgba(10,23,34,.4)'))}
-                <p class="site-footer__blurb">A first look at a skin concern, from a single photo. Currently in development.</p>
-              </div>
-              <nav aria-label="Footer">
-                <h2 class="site-footer__h">Explore</h2>
-                <div class="site-footer__links">${links}</div>
+            <div class="site-footer__top">
+              ${brand(mark('#FFFFFF', '#0A1722', '#A56C47', 'rgba(10,23,34,.4)'))}
+              <nav class="site-footer__links" aria-label="Footer">
+                ${links}
+                <a href="scan.html">Web demo</a>
+                <a href="about.html#faq">FAQ</a>
+                <a href="about.html#contact">Contact</a>
               </nav>
-              <div>
-                <h2 class="site-footer__h">Get started</h2>
-                <div class="site-footer__links">
-                  <a href="scan.html">Web demo</a>
-                  <a href="about.html#faq">FAQ</a>
-                  <a href="about.html#contact">Contact</a>
-                </div>
-              </div>
             </div>
             <p class="site-footer__disclaimer"><strong>EpivaScan is not a medical device and does not give a diagnosis.</strong>
               It is a screening aid in development and is no substitute for an examination by a qualified health professional.
               If a skin problem is painful, bleeding, spreading or changing quickly, seek medical care.</p>
             <div class="site-footer__legal">
-              <span>&copy; ${new Date().getFullYear()} EpivaScan</span>
+              <span>&copy; ${new Date().getFullYear()} EpivaScan &middot; In development</span>
               <span>Built to widen access to skin care.</span>
             </div>
           </div>

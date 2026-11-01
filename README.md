@@ -7,10 +7,11 @@ Static site for the EpivaScan app. No build step: open `index.html` in a browser
 | File | What it is |
 | --- | --- |
 | `index.html` | Home |
-| `how-it-works.html` | The four steps, how to read the percentages, photo tips, limits |
-| `model.html` | The AI model: pipeline, model card, conditions, what will be published |
-| `impact.html` | Impact: numbers, field photos, stories (mostly empty for now) |
-| `about.html` | Mission, principles, team, FAQ, contact |
+| `how-it-works.html` | The four steps beside two app screens, how to read the percentages, photo tips, limits, and one short section on the model (`#model`) |
+| `validation.html` | The dermatologist consultations: every photo, with a photo viewer |
+| `impact.html` | Impact: numbers and field photos |
+| `about.html` | Mission, principles, FAQ, contact (the team section is hidden until it has names and portraits) |
+| `model.html` | Forwards to `how-it-works.html#model`, so old links keep working |
 | `scan.html` | Web demo: add a photo, get the ranked list of conditions it resembles |
 
 Shared styles are in `assets/css/styles.css`. The header, footer and placeholder logic are in `assets/js/site.js`. The demo flow is in `assets/js/scan.js`.
@@ -58,10 +59,16 @@ Every dashed placeholder box shows the file it is waiting for. Save an image at 
 
 | Folder | Files | Used on |
 | --- | --- | --- |
-| `assets/img/impact/` | `01` to `06` | Impact page gallery (`01` to `03` also appear on Home) |
-| `assets/img/app/` | `home`, `capture`, `analyse`, `results`, `next-step`, `web` | App screens from Figma (Home, How it works) |
-| `assets/img/model/` | `model-card` | Hugging Face screenshot (The model) |
-| `assets/img/team/` | `01` to `03` | Portraits (About) |
+| `assets/img/impact/` | `01` to `06` | Impact page gallery. `01-sm`, `02-sm` and `06-sm` (900 px) are the copies used on Home |
+| `assets/img/team/` | `01` to `03` | Portraits (About, once the team section is shown) |
+
+These are plain images, linked straight from the HTML rather than through a placeholder box:
+
+| File | Used on |
+| --- | --- |
+| `assets/img/app/home.png`, `results.png` | Home and How it works. Screenshots of the app at phone size (390 x 844 at 2x). The result is a saved scan with the built-in sample values and a drawn stand-in photo, so it is labelled "Sample data" |
+| `assets/img/model/training-terminal.png` | How it works, `#model`. The first full training run (13 October 2026); its test numbers match `ml/runs/epivascan-skin/model/README.md` |
+| `assets/img/validation/session-N-NN.jpg`, `-sm.jpg` | Validation (full size in the viewer, `-sm` as thumbnails) and Home |
 
 To caption a photo, add `data-caption="..."` to its `<figure>` in the HTML.
 
@@ -82,7 +89,6 @@ Empty values show as "Soon".
 
 - Impact page numbers and their labels
 - Team names and roles
-- Model card values and the condition list on `model.html`
 - The example percentages (eczema 64% and so on) are sample values, labelled as such wherever they appear
 - The numbers the Space answers with in mock mode (`MOCK_SCORES` in `ml/space/app.py`)
 - The cut-offs the scan page uses to call a result "One clear leader" or "Several close together" (`CLEAR_SCORE` and `CLEAR_LEAD` in `assets/js/scan.js`). They are guesses until the trained model's accuracy is known
