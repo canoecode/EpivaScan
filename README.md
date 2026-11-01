@@ -66,7 +66,7 @@ These are plain images, linked straight from the HTML rather than through a plac
 
 | File | Used on |
 | --- | --- |
-| `assets/img/app/home.png`, `results.png` | Home and How it works. Screenshots of the app at phone size (390 x 844 at 2x). The result is a saved scan with the built-in sample values and a drawn stand-in photo, so it is labelled "Sample data" |
+| `assets/img/app/home.png`, `results.png` | Home and How it works. Screenshots of the app at phone size (390 x 844 at 2x). The result is a saved scan with the built-in sample values and a heavily blurred eczema photo, so it is labelled "Sample data" |
 | `assets/img/model/training-terminal.png` | How it works, `#model`. The first full training run (13 October 2026); its test numbers match `ml/runs/epivascan-skin/model/README.md` |
 | `assets/img/validation/session-N-NN.jpg`, `-sm.jpg` | Validation (full size in the viewer, `-sm` as thumbnails) and Home. To change which photos are drawn, move links between the visible grid and the hidden list under it in `validation.html` |
 
