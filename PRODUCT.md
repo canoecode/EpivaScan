@@ -18,7 +18,10 @@ Plain, calm, specific. No fear, no hype, no medical jargon without a gloss. Say 
 ## Surfaces and modes
 - Home (Persuade): explain the tool and get the visitor into the demo.
 - Scan demo (Operate): add a photo, analyse, read results. Task first, brand in the details.
-- Remaining pages (how it works, model, impact, about): Read. Carried over after Home and Scan.
+- Remaining pages (how it works, validation, impact, about): Read. Carried over after Home and Scan.
+
+## Layout decision (2026-11-01)
+The owner asked for a shorter, photo-led site with much less about the AI. Home is the app (real screenshots), then the dermatologist consultations and the field work side by side, each led by its photos. The model is one section on How it works (`#model`), shown as the real training run; `model.html` only forwards there. Keep copy to a line or two per block, and keep the theme as it is.
 
 ## Redesign decision (2026-10-23)
 Direction chosen with the owner: **clinical instrument**. The previous world (cream paper, Fraunces italic serif, teal and clay, soft cards) is an anti-reference. Kept: all copy and facts, the six-tone scale, the logo files, the page set, the scan state machine in `assets/js/scan.js`.
