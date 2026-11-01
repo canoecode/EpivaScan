@@ -559,12 +559,6 @@ site-footer { display: block; }
   .walk__phones .device { --dw: min(43vw, 210px); }
 }
 
-/* How it works: what the three kinds of result mean */
-.readings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.readings li { display: grid; align-content: start; justify-items: start; gap: 10px; }
-.readings p { font-size: 1rem; color: var(--ink-2); }
-@media (max-width: 760px) { .readings { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
-
 /* How it works: the model, shown as one training run */
 .model { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); align-items: start; gap: clamp(28px, 5vw, 64px); }
 .model .lead { margin-top: 12px; }
@@ -574,17 +568,26 @@ site-footer { display: block; }
 @media (max-width: 860px) { .model { grid-template-columns: minmax(0, 1fr); } }
 
 /* Validation: one row per consultation, notes beside every photo from it */
-.consult { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: start; gap: clamp(24px, 4vw, 56px); }
+.consult { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); align-items: start; gap: clamp(24px, 4vw, 56px); }
 .consult + .consult { margin-top: clamp(36px, 5vw, 56px); padding-top: clamp(36px, 5vw, 56px); border-top: 1px solid var(--line); }
 .consult__n { font: 500 .875rem/1 var(--font-mono); color: var(--signal); }
 .consult h2 { margin: 10px 0 10px; font-size: clamp(1.35rem, 1.2rem + .6vw, 1.75rem); }
 .consult p { color: var(--ink-2); }
 .consult .small { margin-top: 14px; }
-.sheet { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.sheet .photo { aspect-ratio: 3 / 4; border-radius: var(--radius-sm); }
-.sheet__n { position: absolute; left: 6px; top: 6px; padding: 3px 5px; border-radius: 4px; background: rgba(10, 23, 34, .72); color: #fff; font: 500 .7rem/1 var(--font-mono); }
+/* One large photo carries the consultation; three more and a "+N photos" tile sit beside it. */
+.sheet { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.sheet .photo { aspect-ratio: 1; border-radius: var(--radius-sm); }
+.sheet .sheet__main { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+.sheet__more { display: grid; place-items: center; }
+.sheet__more::after { content: ""; position: absolute; inset: 0; background: rgba(10, 23, 34, .66); transition: background .2s; }
+.sheet__more:hover::after { background: rgba(21, 70, 201, .78); }
+.sheet__more span { position: relative; z-index: 1; padding: 8px; text-align: center; color: #fff; font: 600 1.05rem/1.2 var(--font-display); letter-spacing: -.01em; text-wrap: balance; }
 @media (max-width: 860px) { .consult { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 560px) { .sheet { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } }
+@media (max-width: 560px) {
+  .sheet { gap: 6px; }
+  .sheet .sheet__main { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 3; }
+  .sheet__more span { font-size: .85rem; }
+}
 
 /* Impact gallery */
 .gallery { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: clamp(170px, 22vw, 290px); gap: 10px; }

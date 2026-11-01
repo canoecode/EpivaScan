@@ -168,7 +168,7 @@
   const ARROW = (d) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
   let viewer;
 
-  function openViewer(links, start) {
+  function openViewer(links, start, opener = links[start]) {
     if (!viewer) {
       viewer = document.createElement('dialog');
       viewer.className = 'lightbox';
@@ -208,19 +208,22 @@
       viewer.querySelector('.lightbox__count').textContent = `${i + 1} / ${links.length}`;
     };
     viewer.step = (d) => { i = (i + d + links.length) % links.length; show(); };
-    viewer.opener = links[start];
+    viewer.opener = opener;
     show();
     viewer.showModal();
   }
 
+  /* A link with data-gallery-all="name" (the "+12 photos" tile) opens the whole set from the first photo.
+     Photos that are only reachable through the viewer can sit in a hidden element. */
   function initGalleries() {
     document.addEventListener('click', (e) => {
-      const link = e.target.closest('a[data-gallery]');
+      const all = e.target.closest('a[data-gallery-all]');
+      const link = all || e.target.closest('a[data-gallery]');
       if (!link || e.metaKey || e.ctrlKey || e.shiftKey || typeof HTMLDialogElement !== 'function') return;
       e.preventDefault();
-      const links = [...document.querySelectorAll(`a[data-gallery="${link.dataset.gallery}"]`)]
+      const links = [...document.querySelectorAll(`a[data-gallery="${link.dataset.galleryAll || link.dataset.gallery}"]`)]
         .sort((a, b) => a.href.localeCompare(b.href));
-      openViewer(links, links.indexOf(link));
+      openViewer(links, all ? 0 : links.indexOf(link), link);
     });
   }
 

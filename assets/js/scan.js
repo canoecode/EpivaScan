@@ -79,7 +79,7 @@
     }
   };
 
-  /* Which of the three readings on how-it-works.html#results a result falls under.
+  /* Which of the three readings a result falls under.
      The cut-offs are placeholders until the trained model's calibration is known. */
   const CLEAR_SCORE = 0.5;  // the top match needs at least this much
   const CLEAR_LEAD = 0.2;   // and to be this far ahead of the runner-up

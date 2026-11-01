@@ -7,8 +7,8 @@ Static site for the EpivaScan app. No build step: open `index.html` in a browser
 | File | What it is |
 | --- | --- |
 | `index.html` | Home |
-| `how-it-works.html` | The four steps beside two app screens, how to read the percentages, photo tips, limits, and one short section on the model (`#model`) |
-| `validation.html` | The dermatologist consultations: every photo, with a photo viewer |
+| `how-it-works.html` | The four steps beside two app screens, and one short section on the model (`#model`) |
+| `validation.html` | The dermatologist consultations: a large photo and three more for each, with a "+N photos" tile that opens all of them in the photo viewer |
 | `impact.html` | Impact: numbers and field photos |
 | `about.html` | Mission, principles, FAQ, contact (the team section is hidden until it has names and portraits) |
 | `model.html` | Forwards to `how-it-works.html#model`, so old links keep working |
@@ -68,7 +68,7 @@ These are plain images, linked straight from the HTML rather than through a plac
 | --- | --- |
 | `assets/img/app/home.png`, `results.png` | Home and How it works. Screenshots of the app at phone size (390 x 844 at 2x). The result is a saved scan with the built-in sample values and a drawn stand-in photo, so it is labelled "Sample data" |
 | `assets/img/model/training-terminal.png` | How it works, `#model`. The first full training run (13 October 2026); its test numbers match `ml/runs/epivascan-skin/model/README.md` |
-| `assets/img/validation/session-N-NN.jpg`, `-sm.jpg` | Validation (full size in the viewer, `-sm` as thumbnails) and Home |
+| `assets/img/validation/session-N-NN.jpg`, `-sm.jpg` | Validation (full size in the viewer, `-sm` as thumbnails) and Home. To change which photos are drawn, move links between the visible grid and the hidden list under it in `validation.html` |
 
 To caption a photo, add `data-caption="..."` to its `<figure>` in the HTML.
 
