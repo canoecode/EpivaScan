@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <script src="assets/js/site.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <script src="assets/js/site.js?v=4"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -19,10 +19,10 @@
 
   <main id="main">
 
-    <section class="hero">
+    <section class="hero grid-bg">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <h1 class="reveal">A closer look at skin, from any phone.</h1>
+          <h1 class="reveal">A closer look at <span class="tone-word">skin</span>, from any phone.</h1>
           <p class="lead reveal" style="--d:.06s">EpivaScan reads a photo of a skin concern and shows which conditions it most closely matches, each with a percentage. It&rsquo;s a clear first step toward the right care.</p>
           <div class="actions reveal" style="--d:.12s">
             <a class="btn" href="scan.html">Try the web demo <span class="arr" aria-hidden="true">&rarr;</span></a>
@@ -32,9 +32,27 @@
         </div>
 
         <figure class="hero__screens">
-          <div class="hero__phones">
-            <div class="device reveal" style="--d:.1s"><img src="assets/img/app/home.png" width="780" height="1688" alt="The EpivaScan app's start screen: &lsquo;Check a skin concern from one photo&rsquo;, with tips for a clear photo and buttons to take or choose one." decoding="async"></div>
-            <div class="device reveal" style="--d:.22s"><img src="assets/img/app/results.png" width="780" height="1688" alt="An EpivaScan result marked as sample data: the closest match is eczema (dermatitis) at 52%, read as &lsquo;One clear leader&rsquo;, above the photo and the other matches." decoding="async"></div>
+          <!-- The scan moment: brackets lock onto the result screen, a line sweeps it once, then the readout
+               appears. Hovering the phones runs it again (site.js, initScanStage). -->
+          <div class="hero__stage" data-scan-stage>
+            <div class="hero__reticle" aria-hidden="true">
+              <svg viewBox="0 0 400 400">
+                <circle cx="200" cy="200" r="196" pathLength="360" class="reticle__ticks"/>
+                <circle cx="200" cy="200" r="190" pathLength="360" class="reticle__major"/>
+                <circle cx="200" cy="200" r="150" class="reticle__ring"/>
+                <circle cx="200" cy="200" r="150" pathLength="360" class="reticle__arc"/>
+                <path d="M200 0v34M200 366v34M0 200h34M366 200h34" class="reticle__cross"/>
+              </svg>
+            </div>
+            <div class="hero__phones">
+              <div class="device reveal" style="--d:.1s"><img src="assets/img/app/home.png" width="780" height="1688" alt="The EpivaScan app's start screen: &lsquo;Check a skin concern from one photo&rsquo;, with tips for a clear photo and buttons to take or choose one." decoding="async"></div>
+              <div class="device device--scan reveal" style="--d:.22s">
+                <img src="assets/img/app/results.png" width="780" height="1688" alt="An EpivaScan result marked as sample data: the closest match is eczema (dermatitis) at 52%, read as &lsquo;One clear leader&rsquo;, above the photo and the other matches." decoding="async">
+                <span class="device__sweep" aria-hidden="true"></span>
+                <span class="vf" aria-hidden="true"></span>
+              </div>
+            </div>
+            <p class="readout" aria-hidden="true"><span class="readout__dot"></span>Closest match <b>52%</b> <span class="readout__tag">Sample</span></p>
           </div>
           <figcaption class="hero__caption reveal" style="--d:.3s">The EpivaScan app. The result shown uses sample values.</figcaption>
         </figure>
@@ -43,7 +61,7 @@
 
     <div class="wrap tone-strip">
       <p>Skin comes in every tone. A tool for skin has to work across all of them.</p>
-      <ol role="img" aria-label="Six skin tones, from lightest (I) to darkest (VI)">
+      <ol class="stagger stagger--tones" role="img" aria-label="Six skin tones, from lightest (I) to darkest (VI)">
         <li>I</li><li>II</li><li>III</li><li>IV</li><li>V</li><li>VI</li>
       </ol>
     </div>
@@ -54,7 +72,7 @@
         <article class="proof__col">
           <h2>Checked with dermatologists.</h2>
           <p class="lead">We take EpivaScan into skin doctors&rsquo; clinics in Bangkok and go through its results with them, photo by photo.</p>
-          <div class="mosaic">
+          <div class="mosaic stagger stagger--wipe">
             <a class="photo" href="validation.html#consultation-2"><img src="assets/img/validation/session-2-06-sm.jpg" width="640" height="853" alt="A dermatologist points to a detail in a skin photo on the EpivaScan result screen." loading="lazy" decoding="async"></a>
             <a class="photo" href="validation.html#consultation-1"><img src="assets/img/validation/session-1-02-sm.jpg" width="640" height="853" alt="A skin photo open in the app on a laptop during a consultation." loading="lazy" decoding="async"></a>
             <a class="photo" href="validation.html#consultation-2"><img src="assets/img/validation/session-2-16-sm.jpg" width="640" height="853" alt="A member of the EpivaScan team and a dermatologist after a consultation." style="object-position:50% 35%" loading="lazy" decoding="async"></a>
@@ -70,7 +88,7 @@
         <article class="proof__col">
           <h2>Used in the field.</h2>
           <p class="lead">More than 3&nbsp;billion people lack access to skin care from a specialist. We&rsquo;ve taken EpivaScan to villages, community health rooms and a local school.</p>
-          <div class="mosaic">
+          <div class="mosaic stagger stagger--wipe">
             <a class="photo" href="impact.html#photos"><img src="assets/img/impact/02-sm.jpg" width="675" height="900" alt="A team member photographs a villager's skin outside a wooden house." loading="lazy" decoding="async"></a>
             <a class="photo" href="impact.html#photos"><img src="assets/img/impact/01-sm.jpg" width="900" height="675" alt="A team member kneels to photograph the skin of an older woman with a phone." style="object-position:40% 50%" loading="lazy" decoding="async"></a>
             <a class="photo" href="impact.html#photos"><img src="assets/img/impact/06-sm.jpg" width="900" height="675" alt="The EpivaScan team with students and teachers in a school hall." loading="lazy" decoding="async"></a>

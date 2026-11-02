@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <script src="assets/js/site.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <script src="assets/js/site.js?v=4"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -19,12 +19,12 @@
 
   <main id="main">
 
-    <section class="page-hero">
+    <section class="page-hero grid-bg">
       <div class="wrap walk">
         <div>
           <h1 class="reveal">From a photo to a next step.</h1>
           <p class="lead reveal" style="--d:.06s">Built to be used without training. Four moves take you from opening the app to knowing what to do next.</p>
-          <ol class="steps reveal" style="--d:.12s; margin-top:28px">
+          <ol class="steps stagger" style="--d:.12s; margin-top:28px">
             <li><strong>Capture the area</strong><p>Photograph the patch of skin, or upload a picture you already have. A sharp, well-lit photo matters most.</p></li>
             <li><strong>The model takes a look</strong><p>It compares the photo with the skin conditions it has been trained to recognise. <a href="#model">About the model</a></p></li>
             <li><strong>Read the matches</strong><p>A ranked list of conditions, closest first, each with a percentage for how strongly the photo matches.</p></li>
@@ -52,7 +52,7 @@
             <a class="btn btn--ghost btn--sm" data-link="huggingFaceUrl">View on Hugging Face</a>
           </div>
         </div>
-        <figure class="shot">
+        <figure class="shot wipe wipe--print">
           <img src="assets/img/model/training-terminal.png" width="2360" height="1388" alt="A terminal running the EpivaScan training script on google/scin with the facebook/dinov2-base model. Validation scores rise over the epochs, and the held-out test ends at a top match of 47%, top 3 of 85% and balanced accuracy of 51%." loading="lazy" decoding="async">
           <figcaption><span class="chip chip--clay">Early results</span>The first full training run, 13 October 2026. Not a clinical evaluation.</figcaption>
         </figure>

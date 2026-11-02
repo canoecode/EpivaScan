@@ -20,6 +20,9 @@ Plain, calm, specific. No fear, no hype, no medical jargon without a gloss. Say 
 - Scan demo (Operate): add a photo, analyse, read results. Task first, brand in the details.
 - Remaining pages (how it works, validation, impact, about): Read. Carried over after Home and Scan.
 
+## Motion decision (2026-11-02)
+The owner found the site flat and asked for livelier layout, backgrounds and animation with the same theme and copy. The motif comes from the product: the viewfinder corners of the logo mark and the scan line of the demo. Home's hero is the one authored moment (brackets lock onto the result screen, a line sweeps it, the sample readout lands); elsewhere photos uncover top to bottom, figures count up, rules draw in, and heroes and closing rows sit on graph paper that lights up under the pointer. Every effect has a reduced-motion path and nothing waits on an animation. Asset links carry `?v=N`; bump it when the CSS or JS changes so cached copies don't pair new pages with old styles.
+
 ## Layout decision (2026-11-01)
 The owner asked for a shorter, photo-led site with much less about the AI. Home is the app (real screenshots), then the dermatologist consultations and the field work side by side, each led by its photos. The model is one section on How it works (`#model`), shown as the real training run; `model.html` only forwards there. Keep copy to a line or two per block, and keep the theme as it is.
 

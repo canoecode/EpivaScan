@@ -19,6 +19,8 @@
     ['about.html', 'About']
   ];
   const here = location.pathname.split('/').pop() || 'index.html';
+  const calm = matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = matchMedia('(pointer: fine)');
 
   document.documentElement.classList.add('js');
 
@@ -64,7 +66,13 @@
         this.classList.toggle('is-open', open);
         toggle.setAttribute('aria-expanded', String(open));
       };
+      this.querySelectorAll('.site-nav > a').forEach((a, i) => a.style.setProperty('--i', i));
       toggle.addEventListener('click', () => setOpen(!this.classList.contains('is-open')));
+
+      /* A shadow once the page moves under the header */
+      const onScroll = () => this.classList.toggle('is-scrolled', window.scrollY > 4);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
       this.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && this.classList.contains('is-open')) { setOpen(false); toggle.focus(); }
       });
@@ -227,24 +235,119 @@
     });
   }
 
+  /* .reveal and .wipe animate as one piece; the children of a .stagger follow one another. */
   function initReveals() {
-    const items = document.querySelectorAll('.reveal');
+    document.querySelectorAll('.stagger').forEach((group) =>
+      [...group.children].forEach((child, i) => child.style.setProperty('--i', i)));
+    const items = document.querySelectorAll('.reveal, .wipe, .stagger');
     if (!('IntersectionObserver' in window)) {
       items.forEach((el) => el.classList.add('is-in'));
       return;
     }
+    /* A .wipe starts fully clipped, which the observer counts as never visible, so its parent is watched instead. */
+    const waiting = new Map();
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
+        waiting.get(entry.target).forEach((el) => el.classList.add('is-in'));
         io.unobserve(entry.target);
       });
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
     items.forEach((el) => {
       /* Anything already in view shows straight away instead of waiting on the observer. */
-      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in');
-      else io.observe(el);
+      if (el.getBoundingClientRect().top < window.innerHeight) return el.classList.add('is-in');
+      const watched = el.matches('.wipe') ? el.parentElement : el;
+      if (!waiting.has(watched)) waiting.set(watched, []);
+      waiting.get(watched).push(el);
+      io.observe(watched);
     });
+  }
+
+  /* Figures count up from zero the first time they come into view: "120+" runs 0+ … 120+.
+     Screen readers get the final figure only. */
+  function initCounts() {
+    const figures = [...document.querySelectorAll('.facts strong')].filter((el) => /^\d+\D*$/.test(el.textContent.trim()));
+    if (calm.matches || !figures.length || !('IntersectionObserver' in window)) return;
+    const run = (el) => {
+      const text = el.textContent.trim();
+      const [, digits, suffix] = text.match(/^(\d+)(\D*)$/);
+      const target = Number(digits);
+      const shown = document.createElement('span');
+      const said = document.createElement('span');
+      shown.setAttribute('aria-hidden', 'true');
+      shown.className = 'count';
+      shown.style.minWidth = `${text.length}ch`;
+      said.className = 'visually-hidden';
+      said.textContent = text;
+      el.replaceChildren(shown, said);
+      const start = performance.now();
+      const length = 900 + Math.min(target, 150) * 3;
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / length);
+        shown.textContent = Math.round(target * (1 - Math.pow(1 - p, 4))) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelectorAll('strong').forEach((el) => figures.includes(el) && run(el));
+      io.unobserve(entry.target);
+    }), { threshold: 0.5 });
+    new Set(figures.map((el) => el.closest('.facts'))).forEach((list) => io.observe(list));
+  }
+
+  /* Graph-paper sections (.grid-bg): a brighter patch of grid follows the pointer, like a loupe.
+     In the home hero the phones also lean a little toward it. Mouse and trackpad only. */
+  function initLoupes() {
+    if (!finePointer.matches) return;
+    document.querySelectorAll('.grid-bg').forEach((el) => {
+      const tilt = !calm.matches && el.querySelector('.hero__phones');
+      let frame = 0;
+      let x = 0;
+      let y = 0;
+      el.addEventListener('pointermove', (e) => {
+        const box = el.getBoundingClientRect();
+        x = e.clientX - box.left;
+        y = e.clientY - box.top;
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          el.style.setProperty('--mx', `${x}px`);
+          el.style.setProperty('--my', `${y}px`);
+          if (tilt) {
+            el.style.setProperty('--tx', (x / box.width - .5).toFixed(3));
+            el.style.setProperty('--ty', (y / box.height - .5).toFixed(3));
+          }
+        });
+      });
+      el.addEventListener('pointerenter', () => el.classList.add('is-pointing'));
+      el.addEventListener('pointerleave', () => {
+        el.classList.remove('is-pointing');
+        el.style.setProperty('--tx', 0);
+        el.style.setProperty('--ty', 0);
+      });
+    });
+  }
+
+  /* The home hero's scan: runs once when the phones arrive, and again on hover once it has finished. */
+  function initScanStage() {
+    const stage = document.querySelector('[data-scan-stage]');
+    if (!stage) return;
+    const readout = stage.querySelector('.readout');
+    let running = false;
+    const run = (first) => {
+      if (running) return;
+      running = true;
+      stage.style.setProperty('--scan-wait', first ? '.75s' : '0s');
+      stage.classList.remove('is-scanning');
+      void stage.offsetWidth;  // restart the keyframes
+      stage.classList.add('is-scanning', 'has-scanned');
+      if (calm.matches) running = false;
+    };
+    readout.addEventListener('animationend', () => { running = false; });
+    run(true);
+    if (finePointer.matches) stage.addEventListener('pointerenter', () => run(false));
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -252,5 +355,8 @@
     document.querySelectorAll('[data-link]').forEach(initLink);
     initGalleries();
     initReveals();
+    initCounts();
+    initLoupes();
+    initScanStage();
   });
 })();
