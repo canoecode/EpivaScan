@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=4">
-  <script src="assets/js/site.js?v=4"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=5">
+  <script src="assets/js/site.js?v=5"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -41,14 +41,15 @@
       </div>
     </section>
 
-    <!-- THE MODEL: swap the screenshot when a verified evaluation exists, and set huggingFaceUrl in site.js. -->
+    <!-- THE MODEL: swap the screenshot when a verified evaluation exists. The Hugging Face link is huggingFaceUrl in site.js. -->
     <section class="section section--tint" id="model">
       <div class="wrap model">
         <div>
           <h2>The model.</h2>
-          <p class="lead">An image model trained on SCIN, a public collection of skin photos labelled by dermatologists. It isn&rsquo;t connected to the web demo yet.</p>
-          <p class="small" style="margin-top:14px">Accuracy, and results for each skin tone, will be published here once testing is complete.</p>
+          <p class="lead">An image model trained on SCIN, a public collection of skin photos labelled by dermatologists. It runs the web demo, and its weights and model card are public on Hugging Face.</p>
+          <p class="small" style="margin-top:14px">On photos it never saw in training, its closest match agrees with the dermatologists 47% of the time, and their answer is in its top three 85% of the time. The model card breaks this down by condition and skin tone.</p>
           <div class="actions">
+            <a class="btn btn--sm" href="scan.html">Try it on the web <span class="arr" aria-hidden="true">&rarr;</span></a>
             <a class="btn btn--ghost btn--sm" data-link="huggingFaceUrl">View on Hugging Face</a>
           </div>
         </div>

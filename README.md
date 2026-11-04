@@ -28,7 +28,7 @@ Which Space the page talks to:
 | This machine (`localhost`) or a phone on the same Wi-Fi | Empty | Photos go to the Space running on this machine, port 7860 |
 | A public address | Empty | The page answers with built-in sample values, labelled "Test mode". Nothing is uploaded and no server is needed |
 
-Creating a Gradio Space on Hugging Face needs a paid plan (PRO, $9 a month, checked October 2026), so the published site uses the built-in sample values until a model server is hosted somewhere. Setting `modelSpace` switches the page to that server with no other change.
+The published site uses [`CanoeBoat/epivascan`](https://huggingface.co/spaces/CanoeBoat/epivascan). It runs on ZeroGPU, the one kind of Gradio Space a free Hugging Face account can host (two at most; plain CPU Spaces need PRO, checked November 2026). Emptying `modelSpace` switches the page back to the rules above with no other change.
 
 Until a trained model is plugged in, the Space runs in **mock mode**: it answers every photo with the same made-up numbers and flags its answer as a mock. The page then shows a "Test mode" notice before any upload and labels the result "Sample data". Both disappear by themselves once the Space has a real model. See `ml/space/README.md`.
 
@@ -79,7 +79,7 @@ Until a file exists, the browser console logs a 404 for each empty box. That is 
 Edit the `CONFIG` block at the top of `assets/js/site.js`:
 
 - `huggingFaceUrl`: enables the "View on Hugging Face" button
-- `modelSpace`: the Hugging Face Space the scan page sends photos to, as `user/space-name`. Leave it empty until the Space is published
+- `modelSpace`: the Hugging Face Space the scan page sends photos to, as `user/space-name`. Set to `CanoeBoat/epivascan`
 - `phoneAppUrl`: enables "Get the phone app"
 - `contactEmail`: turns the contact button on the About page into a mail link
 

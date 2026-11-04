@@ -7,6 +7,8 @@ sdk: gradio
 sdk_version: 6.17.3
 python_version: "3.12"
 app_file: app.py
+models:
+- CanoeBoat/epivascan-skin
 pinned: false
 short_description: Likely skin conditions from one photo. Not a diagnosis.
 ---
@@ -95,9 +97,19 @@ Clear the variable again with `Remove-Item Env:EPIVASCAN_MODEL` to go back to mo
 
 ## Put it on Hugging Face
 
+It is published as [`CanoeBoat/epivascan`](https://huggingface.co/spaces/CanoeBoat/epivascan), a public Space reading the private model repo `CanoeBoat/epivascan-skin`.
+
+The Space runs on ZeroGPU (`zero-a10g`). On a free account that is the only hardware a Gradio Space can have, and the account can host two such Spaces. A GPU is lent to each request inside `run_model` in `app.py`, and every visitor spends their own daily GPU allowance on it. The "protected" visibility, where the app is public but its files are not, needs PRO. Hardware is chosen when the Space is created, not in this README, so a new copy is made from Python:
+
 ```powershell
 ml\.venv\Scripts\hf.exe auth login
-ml\.venv\Scripts\hf.exe upload YOUR-USERNAME/epivascan ml\space . --repo-type space
+ml\.venv\Scripts\python.exe -c "from huggingface_hub import HfApi; HfApi().create_repo('YOUR-USERNAME/epivascan', repo_type='space', space_sdk='gradio', space_hardware='zero-a10g', space_variables=[{'key': 'EPIVASCAN_MODEL', 'value': 'YOUR-USERNAME/epivascan-skin'}])"
 ```
 
-Then set `modelSpace` in the website's `assets/js/site.js` to `YOUR-USERNAME/epivascan`.
+To push changes, use `upload_folder` rather than `hf upload`. The installed `hf` (huggingface_hub 0.36) tries to create the Space first without the hardware, and Hugging Face refuses that with `402 Payment Required`:
+
+```powershell
+ml\.venv\Scripts\python.exe -c "from huggingface_hub import HfApi; HfApi().upload_folder(repo_id='CanoeBoat/epivascan', repo_type='space', folder_path='ml/space', ignore_patterns=['**/__pycache__/**'])"
+```
+
+Then set `modelSpace` in the website's `assets/js/site.js` to the Space's name.

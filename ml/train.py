@@ -653,6 +653,9 @@ def _pct(value, span=None) -> str:
     return f"{text} ({100 * span[0]:.0f}-{100 * span[1]:.0f})" if span else text
 
 
+SCIN_LICENSE = "https://github.com/google-research-datasets/scin/blob/main/LICENSE"
+
+
 def model_card(args, classes, table, uncovered, report, val, temperature, adults_only) -> str:
     cases = table.drop_duplicates("case")
     counts = cases.groupby(["primary", "split"]).size().unstack(fill_value=0)
@@ -668,6 +671,7 @@ def model_card(args, classes, table, uncovered, report, val, temperature, adults
     lines = [
         "---", "library_name: transformers", "pipeline_tag: image-classification",
         f"base_model: {args.model}", *listed,
+        "license: other", "license_name: scin-data-use-license", f"license_link: {SCIN_LICENSE}",
         "tags:", "- dermatology", "- skin", "- medical-imaging", "- epivascan", "---", "",
         "# EpivaScan skin-condition classifier", "",
         "Given one photo of a skin concern, this model returns the conditions the photo most "
@@ -772,8 +776,11 @@ def model_card(args, classes, table, uncovered, report, val, temperature, adults
         f"- Checkpoint chosen by validation balanced accuracy: {_pct(val['balanced_accuracy'])} "
         f"(top match {_pct(val['top1'])}, top 3 {_pct(val['top3'])})",
         "", "## Licence", "",
-        "Not yet chosen. Decide before making this repository public; the SCIN Data Use "
-        "License and the base model's licence both apply to what this model was built from.",
+        f"Released under the [SCIN Data Use License]({SCIN_LICENSE}), the licence of the photos "
+        "and labels it was trained on. Anyone sharing this model, or something built from it, keeps "
+        "this notice and the link to SCIN, and must not try to re-identify the people in the data. "
+        f"The base model, [`{args.model}`](https://huggingface.co/{args.model}), has its own licence "
+        "(Apache-2.0 for DINOv2).",
         "", "## Citation", "",
         "Ward A, Li J, Wang J, et al. Creating an Empirical Dermatology Dataset Through "
         "Crowdsourcing With Web Search Advertisements. JAMA Network Open. 2024;7(11):e2446615.",

@@ -58,6 +58,12 @@
       text: 'Reaching the EpivaScan model…',
       privacy: 'Your photo is sent to the EpivaScan model for analysis.'
     },
+    waking: {
+      tone: 'teal',
+      title: 'Waking the model.',
+      text: 'The EpivaScan model rests when nobody has used it for a while. It takes a minute or two to start. You can add a photo in the meantime.',
+      privacy: 'Your photo is sent to the EpivaScan model for analysis.'
+    },
     mock: {
       tone: 'clay',
       title: 'Test mode.',
@@ -134,11 +140,25 @@
     role('retry').hidden = name !== 'unreachable';
   }
 
+  /* A Space that has gone to sleep, or is restarting after an update, takes a minute or two
+     to answer. Keep trying for that long, and say so, before calling it unreachable. */
+  const WAKE_LIMIT_MS = 4 * 60 * 1000;
+  const WAKE_RETRY_MS = 8000;
+  const WAKING = ['sleeping', 'building', 'starting'];
+
   function connect() {
     if (!connection) {
+      const started = Date.now();
+      // status_callback also makes the client wait while the Space wakes, instead of failing.
+      const onStatus = (status) => { if (WAKING.includes(status.status)) setMode('waking'); };
+      const attempt = () => gradio.Client.connect(SPACE, { status_callback: onStatus }).catch((err) => {
+        if (Date.now() - started > WAKE_LIMIT_MS) throw err;
+        setMode('waking');
+        return new Promise((done) => setTimeout(done, WAKE_RETRY_MS)).then(attempt);
+      });
       connection = import(CLIENT_URL).then((module) => {
         gradio = module;
-        return module.Client.connect(SPACE);
+        return attempt();
       });
       connection.catch(() => { connection = null; });
     }

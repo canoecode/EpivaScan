@@ -12,10 +12,19 @@ so ("mock": true), so the site can be built and tested before training finishes.
 import os
 from pathlib import Path
 
+# On a ZeroGPU Space this has to be imported before torch, which it patches so a GPU is lent
+# to each request. Off Hugging Face it is usually not installed, and nothing needs it.
+try:
+    import spaces
+except ImportError:
+    spaces = None
+
 import gradio as gr
 
 MODEL = os.environ.get("EPIVASCAN_MODEL", "").strip()
 MOCK = not MODEL
+# Set by Hugging Face on ZeroGPU hardware, where torch only sees the GPU inside @spaces.GPU.
+ZERO_GPU = os.environ.get("SPACES_ZERO_GPU", "").lower() in ("1", "true")
 
 # What mock mode answers. The names are the conditions train.py produces with its default
 # settings; the scores are invented and add up to 1 like real model output.
@@ -55,11 +64,24 @@ def load_classifier():
     import torch
     from transformers import pipeline
 
-    scan = pipeline("image-classification", model=MODEL, device=0 if torch.cuda.is_available() else -1)
+    # On ZeroGPU the model is moved to "cuda" here, at startup, and only reaches a real GPU
+    # when run_model below is called.
+    device = "cuda" if ZERO_GPU or torch.cuda.is_available() else "cpu"
+    scan = pipeline("image-classification", model=MODEL, device=device)
     return lambda photo: scan(photo, top_k=scan.model.config.num_labels)
 
 
 classify = load_classifier()
+
+
+def on_gpu(fn):
+    # A ZeroGPU Space must have at least one @spaces.GPU function, even in mock mode.
+    return spaces.GPU(duration=20)(fn) if spaces else fn
+
+
+@on_gpu
+def run_model(photo):
+    return classify(photo)
 
 
 def info() -> dict:
@@ -71,7 +93,8 @@ def info() -> dict:
 def predict(photo) -> dict:
     if photo is None:
         raise gr.Error("Add a photo first.")
-    return {**info(), "predictions": classify(photo)}
+    # Mock answers skip run_model so they never use up anyone's GPU time.
+    return {**info(), "predictions": classify(photo) if MOCK else run_model(photo)}
 
 
 def top_matches(response: dict) -> dict:
