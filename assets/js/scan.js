@@ -186,8 +186,21 @@
       console.error('EpivaScan: the model returned an error.', err);
       connection = null;  // a restarted Space needs a fresh connection
       client.close?.();
+      if (isQuotaError(err)) {
+        const limit = new Error('Each visitor gets a limited amount of model time per day, and this browser has used its share. Try again tomorrow. Signing in to Hugging Face gives a bigger daily allowance.');
+        limit.title = 'The free demo is at its daily limit.';
+        throw limit;
+      }
       throw new Error('The model couldn’t analyse that photo. Please try again.');
     }
+  }
+
+  /* Hugging Face's ZeroGPU lends each visitor a daily slice of GPU time. When it runs out the Space
+     refuses the call with a message about the quota, which the client throws as an object, not an Error. */
+  function isQuotaError(err) {
+    let text = '';
+    try { text = `${err && err.message || ''} ${err && err.title || ''} ${typeof err === 'string' ? err : JSON.stringify(err)}`; } catch (e) { /* unreadable: treat as another error */ }
+    return /quota|zerogpu/i.test(text);
   }
 
   function isAnswer(output) {
@@ -205,9 +218,12 @@
     if (stacked.matches) panel.scrollIntoView({ behavior: calm.matches ? 'auto' : 'smooth', block: 'start' });
   }
 
-  function fail(message) {
+  const ERROR_TITLE = role('error-title').textContent;
+
+  function fail(message, title) {
+    role('error-title').textContent = title || ERROR_TITLE;
     role('error').textContent = message;
-    setState('error');
+    setState('error', title ? 'Daily limit' : undefined);
     reveal(results);
   }
 
@@ -297,7 +313,7 @@
       }
       reveal(results);
     } catch (err) {
-      fail(err.message || 'Something went wrong. Please try again.');
+      fail(err.message || 'Something went wrong. Please try again.', err.title);
     } finally {
       busy = false;
       preview.classList.remove('is-analysing');
