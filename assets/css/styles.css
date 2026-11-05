@@ -894,11 +894,30 @@ site-footer { display: block; }
   .gallery .slot:nth-child(6) { grid-column: span 12; }
 }
 
-/* Team (hidden on About until portraits and names exist) */
-.team { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(180px, 44%), 1fr)); gap: 20px; }
-.member .slot { --ratio: 4 / 5; }
-.member__name { margin-top: 12px; font-weight: 600; }
-.member__role { font-size: 1rem; color: var(--muted); }
+/* About: the founder's portrait in a white mount, the story beside it */
+.founder { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); align-items: center; gap: clamp(32px, 6vw, 88px); }
+.founder .lead { margin-top: 20px; }
+.founder .lead + .lead { margin-top: 14px; }
+@media (max-width: 860px) {
+  .founder { grid-template-columns: minmax(0, 1fr); }
+  .portrait { width: min(100%, 400px); }
+}
+/* A print on a white mount: the photo inset, the name and role on the strip beneath it.
+   The logo's viewfinder corners sit on the photo and lock on once it has been uncovered. */
+.portrait { padding: 10px 10px 0; border-radius: var(--radius-lg); background: var(--panel); box-shadow: 0 1px 2px rgba(10, 23, 34, .06), 0 30px 50px -28px rgba(10, 23, 34, .4); }
+.portrait__photo { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radius); background: var(--ground-2); }
+.portrait__photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.portrait__photo .vf { --l: 30px; inset: 14px; opacity: .9; filter: drop-shadow(0 1px 2px rgba(10, 23, 34, .45)); }
+.portrait__cap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 6px 16px; }
+.portrait__cap strong { display: block; font: 600 1.0625rem/1.25 var(--font-display); letter-spacing: -.015em; }
+.portrait__cap span span { display: block; margin-top: 2px; font-size: .95rem; color: var(--muted); }
+.portrait__mark { width: 30px; height: 30px; flex: none; }
+
+/* About: the second half of the story, set for reading */
+.story { max-width: 36em; }
+.story p { font-size: clamp(1.0625rem, 1rem + .3vw, 1.2rem); line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+.story p + p { margin-top: 16px; }
+.story a { color: var(--signal-deep); font-weight: 600; }
 
 /* Photo viewer for [data-gallery] links (built in site.js) */
 .lightbox {
@@ -1096,6 +1115,7 @@ site-footer { display: block; }
 /* The training run prints line by line, like the terminal it came from */
 .js .wipe--print.is-in { animation: wipe 1.3s steps(16, end) .15s backwards; }
 .js .wipe--print.is-in img { animation: none; }
+.js .portrait__photo.is-in .vf { animation: lock .7s var(--ease) .75s backwards; }
 
 .js .stagger--tones > li { opacity: 1; transform-origin: 50% 100%; }
 .js .stagger--tones:not(.is-in) > li { transform: scaleY(0); }

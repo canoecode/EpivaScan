@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About — EpivaScan</title>
-  <meta name="description" content="Why EpivaScan exists, the principles behind it, and answers to common questions.">
+  <meta name="description" content="The story behind EpivaScan, told by its founder Kundol Tangruthaiwanich.">
   <meta name="theme-color" content="#EEF2F5">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" href="/assets/img/logo-mark.svg" type="image/svg+xml">
@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=5">
-  <script src="assets/js/site.js?v=5"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=6">
+  <script src="assets/js/site.js?v=6"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -23,48 +23,27 @@
   <main id="main">
 
     <section class="page-hero grid-bg">
-      <div class="wrap split">
-        <h1 class="reveal">Skin care shouldn&rsquo;t depend on where you live.</h1>
-        <div class="reveal" style="--d:.08s">
-          <p class="lead">Most skin conditions can be treated once someone recognises them. The hard part is often the first step: knowing what you might be looking at, and whether it needs attention now.</p>
-          <p class="lead" style="margin-top:14px">EpivaScan is built for that step. It&rsquo;s a tool for whoever is already there &mdash; a community health worker, a nurse, a family member &mdash; and never a replacement for a doctor.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--tint">
-      <div class="wrap">
-        <div class="section__head"><div><h2>How we&rsquo;re building it.</h2></div></div>
-        <ul class="ruled ruled--cols stagger">
-          <li><strong>Clear, not clinical</strong><span>Plain percentages and plain language that anyone can read without training.</span></li>
-          <li><strong>Honest about limits</strong><span>We say what the model can&rsquo;t do as plainly as what it can, and will publish how it performs.</span></li>
-          <li><strong>Photos are health data</strong><span>A picture of someone&rsquo;s skin is personal. Privacy is a design requirement from the start.</span></li>
-          <li><strong>Built for the field</strong><span>Made for a phone in someone&rsquo;s hand, in places where specialists are far away.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- TEAM: hidden until it has real content. Save portraits as assets/img/team/01.jpg …,
-         replace the names and roles below, then remove the hidden attribute. -->
-    <section class="section" id="team" hidden>
-      <div class="wrap">
-        <div class="section__head"><div><h2>The people behind EpivaScan.</h2></div></div>
-        <div class="team">
-          <div class="member">
-            <figure class="slot" data-slot="assets/img/team/01" data-label="Portrait 01"></figure>
-            <p class="member__name">Name</p>
-            <p class="member__role">Role</p>
+      <div class="wrap founder">
+        <figure class="portrait reveal">
+          <div class="portrait__photo wipe">
+            <img src="assets/img/team/kundol.jpg" srcset="assets/img/team/kundol-sm.jpg 560w, assets/img/team/kundol.jpg 900w" sizes="(max-width: 860px) 90vw, 400px" width="900" height="1125" alt="Kundol Tangruthaiwanich by a lake, with a snow-capped mountain behind">
+            <span class="vf" aria-hidden="true"></span>
           </div>
-          <div class="member">
-            <figure class="slot" data-slot="assets/img/team/02" data-label="Portrait 02"></figure>
-            <p class="member__name">Name</p>
-            <p class="member__role">Role</p>
-          </div>
-          <div class="member">
-            <figure class="slot" data-slot="assets/img/team/03" data-label="Portrait 03"></figure>
-            <p class="member__name">Name</p>
-            <p class="member__role">Role</p>
-          </div>
+          <figcaption class="portrait__cap">
+            <span><strong>Kundol Tangruthaiwanich</strong><span>Founder and Lead Engineer</span></span>
+            <svg class="portrait__mark" viewBox="0 0 40 40" aria-hidden="true">
+              <rect width="40" height="40" rx="11" fill="#0A1722"/>
+              <g fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"><path d="M8 13.5V11a3 3 0 0 1 3-3h2.5"/><path d="M26.5 8H29a3 3 0 0 1 3 3v2.5"/><path d="M32 26.5V29a3 3 0 0 1-3 3h-2.5"/><path d="M13.5 32H11a3 3 0 0 1-3-3v-2.5"/></g>
+              <g fill="#FFFFFF"><rect x="13" y="12.8" width="2.9" height="14.4" rx="1.45"/><rect x="13" y="12.8" width="14" height="2.9" rx="1.45"/><rect x="13" y="24.3" width="14" height="2.9" rx="1.45"/></g>
+              <rect x="13" y="18.55" width="10" height="2.9" rx="1.45" fill="#CB9069"/>
+            </svg>
+          </figcaption>
+        </figure>
+        <div>
+          <h1 class="reveal">Our story</h1>
+          <p class="lead reveal" style="--d:.08s">For years, I lived with an inflammatory eye disease called vernal keratoconjunctivitis. For more than a year, I visited doctors without getting an answer about what was causing my symptoms. I had to manage the pain and inflammation without knowing what condition I was dealing with or how it could be treated.</p>
+          <p class="lead reveal" style="--d:.14s">Once I finally received a diagnosis, I could begin the right treatment. That experience made me think about the millions of people living with undiagnosed skin conditions, many of which can be treated once properly identified. Yet billions of people live far from a dermatologist and have limited access to specialist care. I created EpivaScan to help close that gap, allowing people to take a photo of their skin, receive an initial AI assessment, and get guidance on when to seek medical attention.</p>
+          <p class="lead reveal" style="--d:.2s">After developing EpivaScan and TeleSync, I founded Pulma to make early lung cancer screening possible through a simple breath test. While each project addresses a different health problem, they all stem from the same motivation I had after my own diagnosis. I want people to have access to the information they need to recognise a health problem early, regardless of where they live.</p>
         </div>
       </div>
     </section>
