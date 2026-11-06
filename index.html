@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=7">
+  <link rel="stylesheet" href="assets/css/styles.css?v=11">
   <script src="assets/js/site.js?v=7"></script>
 </head>
 <body>
@@ -87,7 +87,7 @@
       <div class="wrap proof">
 
         <article class="proof__col">
-          <h2>Checked with dermatologists.</h2>
+          <h2>Dermatologist consultations</h2>
           <p class="lead">We take EpivaScan into skin doctors&rsquo; clinics in Bangkok and go through its results with them, photo by photo.</p>
           <div class="mosaic stagger stagger--wipe">
             <a class="photo" href="validation.html#consultation-2"><img src="assets/img/validation/session-2-06-sm.jpg" width="640" height="853" alt="A dermatologist points to a detail in a skin photo on the EpivaScan result screen." loading="lazy" decoding="async"></a>
@@ -103,7 +103,7 @@
         </article>
 
         <article class="proof__col">
-          <h2>Used in the field.</h2>
+          <h2>Field deployment</h2>
           <p class="lead">More than 3&nbsp;billion people lack access to skin care from a specialist. We&rsquo;ve taken EpivaScan to villages, community health rooms and a local school.</p>
           <div class="mosaic stagger stagger--wipe">
             <a class="photo" href="impact.html#photos"><img src="assets/img/impact/02-sm.jpg" width="675" height="900" alt="A team member photographs a villager's skin outside a wooden house." loading="lazy" decoding="async"></a>
@@ -119,6 +119,32 @@
           <a class="text-link" href="impact.html">See the field photos <span aria-hidden="true">&rarr;</span></a>
         </article>
 
+      </div>
+    </section>
+
+    <!-- The terminal lines are train.py's own summary format, with the numbers from the model repo's
+         eval/training_log.json and eval/metrics.json on Hugging Face (same as How it works). -->
+    <section class="section teaser">
+      <div class="wrap teaser__grid">
+        <div>
+          <h2 class="reveal">Model and training</h2>
+          <p class="lead reveal" style="--d:.06s">An image model fine-tuned on thousands of dermatologist-labelled skin photos. Its training run, test results and weights are all public.</p>
+          <div class="actions reveal" style="--d:.12s">
+            <a class="btn btn--sm" href="how-it-works.html#model-details">How it works <span class="arr" aria-hidden="true">&rarr;</span></a>
+            <a class="btn btn--ghost btn--sm" href="about.html">Meet the founder</a>
+          </div>
+        </div>
+        <figure class="term reveal" style="--d:.08s">
+          <figcaption class="term__bar"><i></i><i></i><i></i><span>ml/train.py</span></figcaption>
+<pre class="term__out"><span class="t-dim">$</span> python ml/train.py --dataset google/scin --model facebook/dinov2-base
+<span class="t-dim">&hellip;</span>
+<span class="t-dim">epoch   loss  val_loss   top1   top3  bal_acc</span>
+   15  1.991     1.843  0.479  0.843    0.454
+   <span class="t-hi">16  1.950     1.886  0.435  0.805    0.500</span>  <span class="t-dim">&larr; best</span>
+
+Test (458 cases, 1002 photos): top match <span class="t-num">47% (43-51)</span>, top 3 <span class="t-num">85% (82-88)</span>, balanced accuracy <span class="t-num">51%</span>, calibration gap <span class="t-num">6.4 points</span>
+Model, model card and charts saved to <span class="t-ok">ml/runs/epivascan-skin/model</span></pre>
+        </figure>
       </div>
     </section>
 

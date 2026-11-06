@@ -982,6 +982,13 @@ site-footer { display: block; }
 .t-hi { color: #fff; background: rgba(21, 70, 201, .45); }
 .t-ok { color: #4CC38A; }
 
+/* Home: a short pointer to the model and the founder */
+.teaser { border-top: 1px solid var(--line); }
+.teaser__grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(24px, 5vw, 64px); }
+.teaser .lead { margin-top: 12px; max-width: 30rem; }
+.teaser .actions { margin-top: 22px; }
+@media (max-width: 860px) { .teaser__grid { grid-template-columns: minmax(0, 1fr); } }
+
 /* 7. Scan demo ------------------------------------------------------------ */
 .scan { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 24px; }
 .scan .results { position: sticky; top: 88px; }
