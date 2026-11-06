@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=7">
+  <link rel="stylesheet" href="assets/css/styles.css?v=11">
   <script src="assets/js/site.js?v=7"></script>
 </head>
 <body>
@@ -73,6 +73,43 @@
           <img src="assets/img/model/training-terminal.png" width="2360" height="1388" alt="A terminal running the EpivaScan training script on google/scin with the facebook/dinov2-base model. Validation scores rise over the epochs, and the held-out test ends at a top match of 47%, top 3 of 85% and balanced accuracy of 51%." loading="lazy" decoding="async">
           <figcaption><span class="chip chip--clay">Early results</span>The first full training run, 13 October 2026. Not a clinical evaluation.</figcaption>
         </figure>
+      </div>
+    </section>
+
+    <!-- The bar chart loads from the model repo on Hugging Face. -->
+    <section class="section hood" id="model-details">
+      <div class="wrap">
+        <div class="section__head">
+          <div>
+            <h2 class="reveal">Model epivascan-skin.</h2>
+            <p class="lead reveal" style="--d:.06s">How often the model gets each condition right on the held-out test photos, and the end of the training run, both from the files published with the model on Hugging Face.</p>
+          </div>
+          <a class="text-link reveal" style="--d:.1s" data-link="huggingFaceUrl">Model card on Hugging Face <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="hood__pair">
+          <a class="hood__fig reveal" href="https://huggingface.co/CanoeBoat/epivascan-skin/blob/main/eval/by_condition.png">
+            <img src="https://huggingface.co/CanoeBoat/epivascan-skin/resolve/main/eval/by_condition.png" width="1140" height="928" alt="Bar chart: for each condition, how often the top match is right and how often the right condition is in the top 3 on the test photos, with 95% intervals." loading="lazy" decoding="async">
+          </a>
+          <!-- The end of the training run in train.py's own print format. Every number is from the model repo's
+               eval/training_log.json and eval/metrics.json; update them together when a new model is pushed. -->
+          <figure class="term reveal" style="--d:.06s">
+            <figcaption class="term__bar"><i></i><i></i><i></i><span>ml/train.py</span></figcaption>
+<pre class="term__out"><span class="t-dim">$</span> python ml/train.py --dataset google/scin --model facebook/dinov2-base
+<span class="t-dim">&hellip;</span>
+<span class="t-dim">epoch   loss  val_loss   top1   top3  bal_acc</span>
+   11  2.073     1.895  0.363  0.770    0.467
+   12  2.040     1.926  0.402  0.780    0.411
+   13  2.012     1.825  0.459  0.829    0.485
+   14  2.006     1.840  0.436  0.818    0.452
+   15  1.991     1.843  0.479  0.843    0.454
+   <span class="t-hi">16  1.950     1.886  0.435  0.805    0.500</span>  <span class="t-dim">&larr; best</span>
+
+Validation (compare runs on this): balanced accuracy <span class="t-num">50%</span>, top match <span class="t-num">43%</span>, top 3 <span class="t-num">81%</span>
+Test (458 cases, 1002 photos): top match <span class="t-num">47% (43-51)</span>, top 3 <span class="t-num">85% (82-88)</span>, balanced accuracy <span class="t-num">51%</span>, calibration gap <span class="t-num">6.4 points</span>
+Model, model card and charts saved to <span class="t-ok">ml/runs/epivascan-skin/model</span></pre>
+            <a class="term__src" href="https://huggingface.co/CanoeBoat/epivascan-skin/tree/main/eval">eval/training_log.json &middot; eval/metrics.json</a>
+          </figure>
+        </div>
       </div>
     </section>
 
