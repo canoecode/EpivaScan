@@ -6,13 +6,29 @@
   <title>Web demo — EpivaScan</title>
   <meta name="description" content="Add a photo of a skin concern and see which conditions it most resembles. A screening aid in development, not a diagnosis.">
   <meta name="theme-color" content="#EEF2F5">
-  <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EpivaScan">
+  <meta property="og:title" content="Web demo — EpivaScan">
+  <meta property="og:description" content="Add a photo of a skin concern and see which conditions it most resembles. A screening aid in development, not a diagnosis.">
+  <meta property="og:url" content="https://epivascan.com/scan.html">
+  <meta property="og:image" content="https://epivascan.com/assets/img/card/epivascan-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EpivaScan: a first look at skin, from one photo. App screens shown on two phones.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://epivascan.com/assets/img/card/epivascan-og.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="icon" href="/assets/img/favicon-96.png" type="image/png" sizes="96x96">
+  <link rel="icon" href="/assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/img/favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=6">
-  <script src="assets/js/site.js?v=6"></script>
-  <script src="assets/js/scan.js?v=5" defer></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=8">
+  <script src="assets/js/site.js?v=8"></script>
+  <script src="assets/js/scan.js?v=6" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -22,7 +38,7 @@
 
     <section class="page-hero grid-bg" style="padding-bottom:clamp(28px,4vw,44px); border-bottom:0">
       <div class="wrap">
-        <h1 style="font-size:clamp(2.4rem,1.5rem + 3.4vw,4rem); margin-top:0">Scan a photo.</h1>
+        <h1 style="font-size:clamp(2.4rem,1.5rem + 3.4vw,4rem); margin-top:0">Web demo</h1>
         <div class="callout" id="model-notice" style="margin-top:26px; max-width:46rem">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4.500M12 17.200v.300"/></svg>
           <p><strong data-role="notice-title">Interface preview.</strong> <span data-role="notice-text">The AI model isn&rsquo;t connected yet, so this page can&rsquo;t analyse photos. You can still walk through the flow.</span></p>
@@ -97,7 +113,7 @@
             </div>
 
             <div class="state state--offline">
-              <h3 data-role="offline-title">The model isn&rsquo;t connected yet.</h3>
+              <h3 data-role="offline-title">Model not connected</h3>
               <p data-role="offline-text">The interface is ready, but the EpivaScan AI hasn&rsquo;t been plugged in. Your photo was not analysed and nothing left your device.</p>
               <div class="results__actions">
                 <button class="btn btn--sm" type="button" data-action="analyse" data-role="retry" hidden>Try again</button>
@@ -136,7 +152,7 @@
             </div>
 
             <div class="state state--error">
-              <h3>That didn&rsquo;t work.</h3>
+              <h3 data-role="error-title">Scan failed</h3>
               <p data-role="error">Something went wrong. Please try again.</p>
             </div>
           </div>
