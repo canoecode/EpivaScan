@@ -212,7 +212,7 @@
       const alt = links[i].querySelector('img')?.alt || '';
       img.src = links[i].href;
       img.alt = alt;
-      viewer.querySelector('.lightbox__caption').textContent = alt;
+      viewer.querySelector('.lightbox__caption').textContent = links[i].dataset.caption || alt;  // data-caption on the link, else the photo's alt
       viewer.querySelector('.lightbox__count').textContent = `${i + 1} / ${links.length}`;
     };
     viewer.step = (d) => { i = (i + d + links.length) % links.length; show(); };

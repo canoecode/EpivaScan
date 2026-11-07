@@ -9,7 +9,7 @@ Static site for the EpivaScan app. No build step: open `index.html` in a browser
 | `index.html` | Home |
 | `how-it-works.html` | The four steps beside two app screens, and one short section on the model (`#model`) |
 | `validation.html` | The dermatologist consultations: a large photo and three more for each, with a "+N photos" tile that opens all of them in the photo viewer |
-| `impact.html` | Impact: numbers and field photos |
+| `impact.html` | Impact: the numbers beside the school photo, then a wall of numbered field photos that open in the photo viewer |
 | `about.html` | Mission, principles, FAQ, contact (the team section is hidden until it has names and portraits) |
 | `model.html` | Forwards to `how-it-works.html#model`, so old links keep working |
 | `scan.html` | Web demo: add a photo, get the ranked list of conditions it resembles |
@@ -59,7 +59,6 @@ Every dashed placeholder box shows the file it is waiting for. Save an image at 
 
 | Folder | Files | Used on |
 | --- | --- | --- |
-| `assets/img/impact/` | `01` to `06` | Impact page gallery. `01-sm`, `02-sm` and `06-sm` (900 px) are the copies used on Home |
 | `assets/img/team/` | `01` to `03` | Portraits (About, once the team section is shown) |
 
 These are plain images, linked straight from the HTML rather than through a placeholder box:
@@ -69,6 +68,7 @@ These are plain images, linked straight from the HTML rather than through a plac
 | `assets/img/app/home.png`, `results.png` | Home and How it works. Screenshots of the app at phone size (390 x 844 at 2x). The result is a saved scan with the built-in sample values and a heavily blurred eczema photo, so it is labelled "Sample data" |
 | `assets/img/model/training-terminal.png` | How it works, `#model`. The first full training run (13 October 2026); its test numbers match `ml/runs/epivascan-skin/model/README.md` |
 | `assets/img/validation/session-N-NN.jpg`, `-sm.jpg` | Validation (full size in the viewer, `-sm` as thumbnails) and Home. To change which photos are drawn, move links between the visible grid and the hidden list under it in `validation.html` |
+| `assets/img/impact/NN.jpg`, `-sm.jpg` | Impact (full size in the viewer, `-sm` at 900 px on the long side on the page) and Home (`01`, `02`, `06`). `06` is the hero photo; the rest are tiles on the wall. To add a photo, save both sizes, copy a tile in `impact.html` and change its number, alt text and caption. `tile--tall` suits a portrait photo, `tile--big` a lead photo, and a plain tile a landscape one; the wall fills gaps by itself |
 
 To caption a photo, add `data-caption="..."` to its `<figure>` in the HTML.
 

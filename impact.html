@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=5">
-  <script src="assets/js/site.js?v=5"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=6">
+  <script src="assets/js/site.js?v=6"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -23,29 +23,54 @@
     <section class="page-hero grid-bg page-hero--split">
       <div class="wrap">
         <div>
-          <h1 class="reveal">Out of the lab, into the field.</h1>
+          <h1 class="reveal">Field deployment.</h1>
           <p class="lead reveal" style="--d:.06s">EpivaScan is made for places where skin care is hardest to reach. The team has taken it to villages, community health rooms and a local school, photographing each skin concern on a phone and noting it down.</p>
+          <ul class="facts reveal" style="--d:.12s">
+            <li><strong>50+</strong><span>people screened</span></li>
+            <li><strong>5</strong><span>communities reached</span></li>
+            <li><strong>120+</strong><span>scans completed</span></li>
+          </ul>
         </div>
-        <ul class="facts reveal" style="--d:.12s">
-          <li><strong>50+</strong><span>people screened</span></li>
-          <li><strong>5</strong><span>communities reached</span></li>
-          <li><strong>120+</strong><span>scans completed</span></li>
-        </ul>
+        <a class="photo page-hero__photo wipe" href="assets/img/impact/07.jpg" data-gallery="field" data-caption="With the students and teachers at the school hall." style="--d:.1s">
+          <img src="assets/img/impact/07-sm.jpg" width="900" height="675" alt="The EpivaScan team standing at the back of a school hall, with hundreds of students seated on the floor in front of them." decoding="async">
+        </a>
       </div>
     </section>
 
-    <!-- FIELD PHOTOS: files are assets/img/impact/01.jpg … 06.jpg. Swap a file to change a photo;
-         data-caption is the line shown over the photo, data-alt the description for screen readers.
-         01, 02 and 06 also appear on Home as 01-sm.jpg, 02-sm.jpg and 06-sm.jpg. -->
+    <!-- FIELD PHOTOS: assets/img/impact/NN.jpg (full size, opens in the photo viewer) and NN-sm.jpg
+         (900 px on the long side, drawn on the page). To add a photo, copy a tile and change the
+         number, alt, caption and data-caption. Tile shapes: tile--big (2×2), tile--tall (portrait,
+         1×2), plain (landscape, 1×1). The wall packs tiles into any gaps, so order is free.
+         06 (the school hall) is no longer shown here. 07 is the hero photo. 01 and 02 also appear on Home. -->
     <section class="section section--flush" id="photos">
       <div class="wrap">
-        <div class="gallery stagger stagger--wipe">
-          <figure class="slot" data-slot="assets/img/impact/01" data-label="Field photo 01" data-alt="A team member kneels to photograph the skin of an older woman in traditional dress with a phone." data-caption="Scanning a skin concern with a phone, at the person&rsquo;s own pace."></figure>
-          <figure class="slot" data-slot="assets/img/impact/02" data-label="Field photo 02" data-alt="A team member photographs a villager's skin outside a wooden house." data-caption="Outside a village home."></figure>
-          <figure class="slot" data-slot="assets/img/impact/03" data-label="Field photo 03" data-alt="Team members photograph a child's leg with a phone while an adult records details on paper." data-caption="Each scan is noted down on paper."></figure>
-          <figure class="slot" data-slot="assets/img/impact/04" data-label="Field photo 04" data-alt="Team members photograph a man's skin with phones inside a community health room." data-caption="In a community health room."></figure>
-          <figure class="slot" data-slot="assets/img/impact/05" data-focus="50% 75%" data-label="Field photo 05" data-alt="A team member checks a girl's scalp while another holds a phone ready to take a photo." data-caption="Checking the scalp as well as the skin."></figure>
-          <figure class="slot" data-slot="assets/img/impact/06" data-label="Field photo 06" data-alt="The EpivaScan team with students and teachers in a school hall, in front of donated supplies." data-caption="With the students and teachers at the school."></figure>
+        <div class="wall__head reveal">
+          <p class="wall__label">Field photos</p>
+          <p class="small">Tap any photo to see it full size.</p>
+        </div>
+        <div class="wall">
+          <div class="wall__grid stagger stagger--wipe">
+            <a class="photo tile tile--big" href="assets/img/impact/01.jpg" data-gallery="field" data-caption="Scanning a skin concern with a phone, at the person&rsquo;s own pace.">
+              <img src="assets/img/impact/01-sm.jpg" width="900" height="675" alt="A team member kneels to photograph the skin of an older woman in traditional dress with a phone." loading="lazy" decoding="async">
+              <span class="tile__cap"><b>01</b>Scanning a skin concern with a phone, at the person&rsquo;s own pace.</span>
+            </a>
+            <a class="photo tile tile--tall" href="assets/img/impact/02.jpg" data-gallery="field" data-caption="Outside a village home.">
+              <img src="assets/img/impact/02-sm.jpg" width="675" height="900" alt="A team member photographs a villager's skin outside a wooden house." loading="lazy" decoding="async">
+              <span class="tile__cap"><b>02</b>Outside a village home.</span>
+            </a>
+            <a class="photo tile tile--tall" href="assets/img/impact/03.jpg" data-gallery="field" data-caption="Each scan is noted down on paper.">
+              <img src="assets/img/impact/03-sm.jpg" width="506" height="900" alt="Team members photograph a child's leg with a phone while an adult records details on paper." loading="lazy" decoding="async">
+              <span class="tile__cap"><b>03</b>Each scan is noted down on paper.</span>
+            </a>
+            <a class="photo tile tile--tall" href="assets/img/impact/04.jpg" data-gallery="field" data-caption="In a community health room.">
+              <img src="assets/img/impact/04-sm.jpg" width="675" height="900" alt="Team members photograph a man's skin with phones inside a community health room." loading="lazy" decoding="async">
+              <span class="tile__cap"><b>04</b>In a community health room.</span>
+            </a>
+            <a class="photo tile tile--tall" href="assets/img/impact/05.jpg" data-gallery="field" data-caption="Checking the scalp as well as the skin.">
+              <img src="assets/img/impact/05-sm.jpg" width="506" height="900" alt="A team member checks a girl's scalp while another holds a phone ready to take a photo." style="object-position:50% 75%" loading="lazy" decoding="async">
+              <span class="tile__cap"><b>05</b>Checking the scalp as well as the skin.</span>
+            </a>
+          </div>
         </div>
 
         <div class="endcap grid-bg" style="margin-top:clamp(28px,4vw,44px)">

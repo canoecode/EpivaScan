@@ -801,11 +801,11 @@ site-footer { display: block; }
 .page-hero__status { display: flex; flex-wrap: wrap; gap: 10px; }
 .page-hero--split .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: clamp(28px, 5vw, 72px); }
 .page-hero__photo { justify-self: end; width: 100%; max-width: 440px; aspect-ratio: var(--ratio, 4 / 3); box-shadow: var(--shadow); }
-.page-hero--split .facts { align-self: end; justify-self: end; }
+.page-hero--split .wrap > .facts { align-self: end; justify-self: end; }
 @media (max-width: 860px) {
   .page-hero--split .wrap { grid-template-columns: minmax(0, 1fr); }
   .page-hero__photo { justify-self: start; }
-  .page-hero--split .facts { justify-self: start; }
+  .page-hero--split .wrap > .facts { justify-self: start; }
 }
 
 /* How it works: the four steps beside the app screens */
@@ -878,21 +878,42 @@ site-footer { display: block; }
   .sheet__more span { font-size: .85rem; }
 }
 
-/* Impact gallery */
-.gallery { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: clamp(170px, 22vw, 290px); gap: 10px; }
-.gallery .slot { height: 100%; aspect-ratio: auto; }
-.gallery .slot:nth-child(1) { grid-column: span 7; }
-.gallery .slot:nth-child(2) { grid-column: span 5; }
-.gallery .slot:nth-child(3),
-.gallery .slot:nth-child(4),
-.gallery .slot:nth-child(5) { grid-column: span 4; }
-.gallery .slot:nth-child(6) { grid-column: span 12; }
-@media (max-width: 720px) {
-  .gallery { grid-auto-rows: clamp(160px, 46vw, 250px); gap: 8px; }
-  .gallery .slot:nth-child(n) { grid-column: span 6; }
-  .gallery .slot:nth-child(1),
-  .gallery .slot:nth-child(6) { grid-column: span 12; }
+/* Impact wall: a tight grid of numbered field photos that packs itself as more are added.
+   Rows are sized from the wall's own width, so a big tile stays near 4:3 and a tall one near 2:3
+   at every column count. Plain tiles are landscape 1×1; tile--tall spans two rows, tile--big two of each. */
+.wall__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 20px; margin-bottom: 12px; }
+.wall__label { font: 500 .875rem/1 var(--font-mono); color: var(--signal); }
+.wall { container-type: inline-size; }
+.wall__grid {
+  --cols: 6;
+  --gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-auto-rows: calc((100cqi - (var(--cols) - 1) * var(--gap)) / var(--cols) * .78);
+  grid-auto-flow: dense;
+  gap: var(--gap);
 }
+@container (max-width: 760px) { .wall__grid { --cols: 3; } }
+@container (max-width: 460px) { .wall__grid { --cols: 2; } }
+.tile { border-radius: var(--radius-sm); }
+.tile--tall { grid-row: span 2; }
+.tile--big { grid-column: span 2; grid-row: span 2; border-radius: var(--radius); }
+.tile::before { --l: 14px; inset: 7px; border-radius: 6px; }
+.tile--big::before { --l: 22px; inset: 10px; border-radius: 10px; }
+.tile__cap {
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 0;
+  padding: 30px 12px 11px;
+  background: linear-gradient(transparent, rgba(10, 23, 34, .8));
+  color: #fff;
+  font-size: .8125rem;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.tile__cap b { display: block; margin-bottom: 3px; font: 500 .75rem/1 var(--font-mono); font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, .72); }
+.tile--big .tile__cap { padding: 44px 16px 14px; font-size: .95rem; }
+@container (max-width: 460px) { .tile__cap { padding: 26px 9px 8px; font-size: .75rem; } }
 
 /* Team (hidden on About until portraits and names exist) */
 .team { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(180px, 44%), 1fr)); gap: 20px; }
